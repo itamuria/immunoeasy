@@ -7,6 +7,10 @@
 #' @export
 #'
 #' @examples
+#' \dontrun {
+#' counts2fpkm_subread (filename, mfl_num = c(mfl_number))
+#' }
+#'
 counts2fpkm_subread <- function(filename, mfl_num = c(mfl_number))
 {
   # Load data  ------------------------------------------------------------

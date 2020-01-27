@@ -22,10 +22,10 @@ The goal of immunoeasy is to make immunologist life easier with clear functions.
 
 ## Installation
 
-You can install the released version of immunoeasy from [CRAN](https://CRAN.R-project.org) with:
+You can install the released version of immunoeasy from [Github](https://github.com/itamuria/immunoeasy) with:
 
 ``` r
-install.packages("immunoeasy")
+remotes::install_github("itamuria/immunoeasy")
 ```
 
 ## Example
