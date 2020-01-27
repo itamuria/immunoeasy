@@ -2,13 +2,13 @@
 #'
 #' @param fpkm_values
 #'
-#' @return
+#' @return a vector with quartiles
 #' @export
 #'
 #' @examples
-#' fpkm2cuartiles_cuff(rnorm(10))
+#' fpkm2cuartiles_cuff(rnorm(100))
 #'
-fpkm2cuartiles_cuff <- function(fpkm_values)
+fpkm2cuartiles <- function(fpkm_values)
 {
   qt <- quantile(fpkm_values[fpkm_values!=0], probs=0:4/4)
   q1 <- as.numeric(qt[1])
