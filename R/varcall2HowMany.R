@@ -15,7 +15,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun {
+#' \dontrun{
 #' varcall2HowMany (filename)
 #' }
 #'
@@ -73,7 +73,7 @@ varcall2HowMany <- function(filename, chr_pos = 1, position = 2, gen_name = 3, v
     if(length(var_cal_4) == 4) df_out$HowMany[h] <- 4-(is.na(df_out[h,var_cal_4[1]])+is.na(df_out[h,var_cal_4[2]])+is.na(df_out[h,var_cal_4[3]])+is.na(df_out[h,var_cal_4[4]]))
     if(length(var_cal_4) == 3) df_out$HowMany[h] <- 3-(is.na(df_out[h,var_cal_4[1]])+is.na(df_out[h,var_cal_4[2]])+is.na(df_out[h,var_cal_4[3]]))
     if(length(var_cal_4) == 2) df_out$HowMany[h] <- 2-(is.na(df_out[h,var_cal_4[1]])+is.na(df_out[h,var_cal_4[2]]))
-    
+
 
     if(!is.na(VAF))
     {

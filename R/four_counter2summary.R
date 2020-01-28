@@ -13,7 +13,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun {
+#' \dontrun{
 #' four_counter2summary (subread_name,cuff_name,quant_name,htseq_name,
 #'                                ngenes = NULL, mfl_number = mfl_number, export_excel_name = "four_together.xlsx", save_intermediate = FALSE)
 #' }
@@ -56,7 +56,7 @@ four_counter2summary <- function(subread_name,cuff_name,quant_name,htseq_name,
   m2_logico$Symbol <- as.character(m2_logico$Symbol)
   m3_logico <- merge(m1_logico, m2_logico, by = "Symbol", all = TRUE)
 
-  # filtrar con nuestros datos o no. 
+  # filtrar con nuestros datos o no.
 
   mfinal <- m3_logico[m3_logico$Symbol%in%ngenes,]
 

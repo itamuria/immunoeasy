@@ -18,7 +18,7 @@ data frame with new rows
 Sometimes there are more than one names in the same field. This function helps to separate them in different rows
 }
 \examples{
-\dontrun {
+\dontrun{
 varcall2HowMany (filename)
 }
 

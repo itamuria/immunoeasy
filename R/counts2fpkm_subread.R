@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun {
+#' \dontrun{
 #' counts2fpkm_subread (filename, mfl_num = c(mfl_number))
 #' }
 #'

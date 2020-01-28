@@ -26,6 +26,6 @@ a data framewith the symbol, chromosome, start position, end position and length
 Search symbols from ENG ids and calculate the length of the gene
 }
 \examples{
-ens2symbol(vector_names = c("ENSG00000000003"))
+ens2symbol(ens_ids = c("ENSG00000000003"))
 
 }

@@ -18,7 +18,7 @@ data frame with fpkm and quartiles
 From fpkm to quartiles with Cufflink files
 }
 \examples{
-\dontrun {
+\dontrun{
 counts2fpkm_cuff (filename)
 }
 

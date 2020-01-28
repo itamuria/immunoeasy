@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun {
+#' \dontrun{
 #' counts2fpkm_quant (filename, mfl_num = c(mfl_number))
 #' }
 #'
@@ -37,7 +37,7 @@ counts2fpkm_quant <- function(filename, mfl_num = c(mfl_number))
 
   # repetir si solo hay una columna de conteos
   mfl <- c(rep(mfl_num,2))
-  delete_str <- c("__alignment_not_unique","__ambiguous","__no_feature","__not_aligned","__too_low_aQual") 
+  delete_str <- c("__alignment_not_unique","__ambiguous","__no_feature","__not_aligned","__too_low_aQual")
   gene_names2$GeneID <- as.character(gene_names2$GeneID)
   gene_names2 <- gene_names2[!gene_names2$GeneID%in%delete_str,]
 
@@ -54,11 +54,11 @@ counts2fpkm_quant <- function(filename, mfl_num = c(mfl_number))
   } else {
     gene_names4 <- gene_names3
   }
-  
+
   df_calc <- data.frame(gene_names4$Counts,gene_names4$Counts)
   rownames(df_calc) <- gene_names4$GeneID
   colnames(df_calc) <- c("Sample_1","Sample_2")
- 
+
   ## fpkm ------------------------------------------------------------
 
   fpkm_matrix <- countToFPKM::fpkm (df_calc, gene_names4$length, mfl)

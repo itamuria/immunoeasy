@@ -16,7 +16,7 @@ last three letters (extension)
 Extract type of extension
 }
 \examples{
-\dontrun {
+\dontrun{
 filter_format_word ("testing.doc")
 }
 

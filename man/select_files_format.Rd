@@ -18,7 +18,7 @@ Select the elements that fill the criteria
 Select those elements of a vector with the specified extension
 }
 \examples{
-\dontrun {
+\dontrun{
 select_files_format (c("testing.vcf","bat.vcf","bibi.cod"), formatw = "vcf")
 }
 

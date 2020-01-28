@@ -6,7 +6,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun {
+#' \dontrun{
 #' filter_format_word ("testing.doc")
 #' }
 #'
@@ -25,7 +25,7 @@ filter_format_word <- function(filename)
 #' @export
 #'
 #' @examples
-#' \dontrun {
+#' \dontrun{
 #' select_files_format (c("testing.vcf","bat.vcf","bibi.cod"), formatw = "vcf")
 #' }
 #'

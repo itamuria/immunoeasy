@@ -10,7 +10,7 @@
 #' @return a data framewith the symbol, chromosome, start position, end position and length
 #'
 #' @examples
-#' ens2symbol(vector_names = c("ENSG00000000003"))
+#' ens2symbol(ens_ids = c("ENSG00000000003"))
 #'
 #' @export
 ens2symbol <- function(ens_ids, specie = "hsapiens_gene_ensembl",

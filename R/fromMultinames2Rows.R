@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun {
+#' \dontrun{
 #' varcall2HowMany (filename)
 #' }
 #'

@@ -16,6 +16,6 @@ a vector with quartiles
 Fpkm to quartiles
 }
 \examples{
-fpkm2cuartiles_cuff(rnorm(100))
+fpkm2cuartiles(rnorm(100))
 
 }

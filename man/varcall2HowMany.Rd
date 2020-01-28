@@ -37,7 +37,7 @@ data frame with How many variant callers per mutation
 From an excel with mutation detected in each varian caller, the function convert the data in a table with information about in how many variant callers appeared the mutation.
 }
 \examples{
-\dontrun {
+\dontrun{
 varcall2HowMany (filename)
 }
 

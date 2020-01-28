@@ -39,7 +39,7 @@ data frame with all the information merged
 Merge all the counters together
 }
 \examples{
-\dontrun {
+\dontrun{
 four_counter2summary (subread_name,cuff_name,quant_name,htseq_name,
                                ngenes = NULL, mfl_number = mfl_number, export_excel_name = "four_together.xlsx", save_intermediate = FALSE)
 }

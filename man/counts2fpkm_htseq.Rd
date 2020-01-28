@@ -18,7 +18,7 @@ data frame with fpkm and quartiles
 From counts to fpkm and quartiles with htseq files
 }
 \examples{
-\dontrun {
+\dontrun{
 counts2fpkm_htseq (filename, mfl_num = c(mfl_number))
 }
 
