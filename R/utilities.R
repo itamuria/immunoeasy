@@ -1,4 +1,4 @@
-#' Extract type of extension 
+#' Extract type of extension
 #'
 #' @param filename Filename that need to be extracted
 #'
@@ -16,7 +16,6 @@ filter_format_word <- function(filename)
   initialpoint <- lenword-2
   return(substr(filename,initialpoint,lenword))
 }
-
 #' Select those elements of a vector with the specified extension
 #'
 #' @param word_vector Vector with several names
@@ -49,12 +48,12 @@ select_files_format <- function(word_vector, formatw = "vcf")
 #' @export
 #'
 #' @examples
-#' \dontrun {
+#'
+#' \dontrun{
 #' day_hour ("day")
 #' day_hour ("hour")
 #' day_hour ("day_hour")
 #' }
-#'
 day_hour <- function(time1) {
   if (time1 == "day") {
     day <- paste(strsplit(as.character(substring(Sys.time(), 1, 10)), "-")[[1]], collapse = "")

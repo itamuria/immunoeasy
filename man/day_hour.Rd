@@ -16,10 +16,10 @@ A character with the information of the moment in different formats to include i
 Extract day, hour or day and hour of the moment
 }
 \examples{
-\dontrun {
+
+\dontrun{
 day_hour ("day")
 day_hour ("hour")
 day_hour ("day_hour")
 }
-
 }
