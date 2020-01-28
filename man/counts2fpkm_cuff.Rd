@@ -4,10 +4,12 @@
 \alias{counts2fpkm_cuff}
 \title{From fpkm to quartiles with Cufflink files}
 \usage{
-counts2fpkm_cuff(filename)
+counts2fpkm_cuff(filename, previous_clean = FALSE)
 }
 \arguments{
 \item{filename}{The name of the file with Cufflink counts}
+
+\item{previous_clean}{If we should remove the gene_names == "-" before FPKM calculus}
 }
 \value{
 data frame with fpkm and quartiles

@@ -9,13 +9,21 @@ four_counter2summary(
   cuff_name,
   quant_name,
   htseq_name,
-  ngenes,
+  ngenes = NULL,
   mfl_number = mfl_number,
   export_excel_name = "four_together.xlsx",
   save_intermediate = FALSE
 )
 }
 \arguments{
+\item{ngenes}{Selection of genes that we want to filter}
+
+\item{mfl_number}{Mean length}
+
+\item{export_excel_name}{Name of the final excel name}
+
+\item{save_intermediate}{If we want to save intermediate files}
+
 \item{subread_raw_file}{Data frame with normalized subread cuartiles}
 
 \item{cufflink_raw_file}{Data frame with normalized cufflink cuartiles}
@@ -33,7 +41,7 @@ Merge all the counters together
 \examples{
 \dontrun {
 four_counter2summary (subread_name,cuff_name,quant_name,htseq_name,
-                               ngenes, mfl_number = mfl_number, export_excel_name = "four_together.xlsx", save_intermediate = FALSE)
+                               ngenes = NULL, mfl_number = mfl_number, export_excel_name = "four_together.xlsx", save_intermediate = FALSE)
 }
 
 }
