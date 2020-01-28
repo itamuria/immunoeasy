@@ -18,42 +18,32 @@ four_counter2summary <- function(subread_name,cuff_name,quant_name,htseq_name,
                                 ngenes, mfl_number = mfl_number, export_excel_name = "four_together.xlsx", save_intermediate = FALSE)
 {
     semi_subread <- counts2fpkm_subread (subread_name, mfl_num = c(mfl_number))
-    semi_cuff <- counts2fpkm_cuff (subread_name)
+    semi_cuff <- counts2fpkm_cuff (cuff_name)
     semi_cuant <- counts2fpkm_quant (quant_name, mfl_num = c(mfl_number))
     semi_htseq <- counts2fpkm_htseq (htseq_name, mfl_num = c(mfl_number))
 
-  head(semi_cuff)
   semi_cuffb <- semi_cuff[,c(1,5,7,10,14)]
   names(semi_cuffb) <- c("Gene_id","Symbol","cuff_locus","cuff_FPKM","cuff_Cuartiles")
-  head(semi_cuffb)
   semi_cuffb10 <- from_multinames_to_rows (dataset = semi_cuffb, colu_name = "Symbol")
   semi_cuffb10 <- semi_cuffb10[,-which(names(semi_cuffb10)=="delete")]
 
 
-  head(semi_cuff2)
   semi_cuff2b <- semi_cuff2[,c(1,5,7,10,14)]
   names(semi_cuff2b) <- c("Gene_id","Symbol","cuff2_locus","cuff2_FPKM","cuff2_Cuartiles")
-  head(semi_cuff2b)
   semi_cuff2b10 <- from_multinames_to_rows (dataset = semi_cuff2b, colu_name = "Symbol")
   semi_cuff2b10 <- semi_cuff2b10[,-which(names(semi_cuff2b10)=="delete")]
 
 
-  head(semi_htseq)
   semi_htseq2 <- semi_htseq[,c(1,7,2,4,6)]
   semi_htseq2$ht_locus <- paste0(semi_htseq$chromosome_name,":",semi_htseq$start_position,"-",semi_htseq$end_position)
   names(semi_htseq2) <- c("Gene_id","Symbol","ht_FPKM","ht_Cuartiles","ht_Counts","ht_locus")
-  head(semi_htseq2)
   semi_htseq2 <- semi_htseq2[which(semi_htseq2$ht_locus%in%grep("^C|^G",semi_htseq2$ht_locus, value=TRUE, invert = TRUE)),]
 
-  head(semi_quant)
   names(semi_quant) <- c("Symbol","Quan_FPKM","Quan_Cuartiles","Quan_Counts")
-  head(semi_quant)
 
-  head(semi_subread)
   semi_subread2 <- semi_subread[,c(1,7,2,4,6)]
   semi_subread2$ht_locus <- paste0(semi_subread$chromosome_name,":",semi_subread$start_position,"-",semi_subread$end_position)
   names(semi_subread2) <- c("Gene_id","Symbol","SR_FPKM","SR_Cuartiles","SR_Counts","SR_locus")
-  head(semi_subread2)
   semi_subread2 <- semi_subread2[which(semi_subread2$SR_locus%in%grep("^C|^G",semi_subread2$SR_locus, value=TRUE, invert = TRUE)),]
 
   # merging
@@ -83,15 +73,12 @@ four_counter2summary <- function(subread_name,cuff_name,quant_name,htseq_name,
 
   # filtrar con nuestros datos
 
-
-
   mfinal <- m3_logico[m3_logico$Symbol%in%ngenes,]
   ngenes[!ngenes%in%m3_logico$Symbol]
 
   head(mfinal)
   mfinal2 <- mfinal[,c(1,2,15,6,11,19,5,9,18,3,7,12,16,4,8,13,14,17)]
   head(mfinal2)
-
 
   mfinal2$SR_Cuartiles <- as.numeric(as.character(mfinal2$SR_Cuartiles))
   mfinal2$Quan_Cuartiles <- as.numeric(as.character(mfinal2$Quan_Cuartiles))
