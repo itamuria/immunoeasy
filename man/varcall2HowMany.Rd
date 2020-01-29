@@ -24,6 +24,8 @@ varcall2HowMany(
 
 \item{gen_name}{Position of the Gene name in the data frame}
 
+\item{varian_caller}{Position of the Variant Caller in the data frame}
+
 \item{VAF}{Position of the VAF name in the data frame (if is not present, NA will be presented)}
 
 \item{others}{Position of the other variables in the data frame that will be merged}

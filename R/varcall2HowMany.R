@@ -6,6 +6,7 @@
 #' @param chr_pos Position of the chromosome name in the data frame
 #' @param position Position of the mega position in the data frame
 #' @param gen_name Position of the Gene name in the data frame
+#' @param varian_caller Position of the Variant Caller in the data frame
 #' @param VAF Position of the VAF name in the data frame (if is not present, NA will be presented)
 #' @param others Position of the other variables in the data frame that will be merged
 #' @param var_cal_4 Names of the four variant caller to calculate the How many field

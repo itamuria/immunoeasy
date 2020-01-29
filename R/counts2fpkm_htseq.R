@@ -20,7 +20,6 @@ counts2fpkm_htseq <- function(filename, mfl_num = c(mfl_number))
 
   # Obtain symbols and length  ------------------------------------------------------------
 
-  library("biomaRt")
   annotLookup2 <- ens2symbol(dat$GeneID)
 
   # ENS ID generalizing   ------------------------------------------------------------

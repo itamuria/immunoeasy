@@ -18,6 +18,8 @@ ens2symbol(
 \item{attributes_list}{attributes that we want to obtain in the last table}
 
 \item{filter_name}{the source information}
+
+\item{especie}{Specie that we want to get information from}
 }
 \value{
 a data framewith the symbol, chromosome, start position, end position and length

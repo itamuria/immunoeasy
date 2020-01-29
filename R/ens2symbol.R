@@ -4,6 +4,7 @@
 #' @description Search symbols from ENG ids and calculate the length of the gene
 #'
 #' @param ens_ids a vector with the ensemble ids
+#' @param especie Specie that we want to get information from
 #' @param attributes_list attributes that we want to obtain in the last table
 #' @param filter_name the source information
 #'

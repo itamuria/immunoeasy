@@ -1,9 +1,9 @@
 #' Merge all the counters together
 #'
-#' @param subread_raw_file Data frame with normalized subread cuartiles
-#' @param cufflink_raw_file Data frame with normalized cufflink cuartiles
-#' @param htseq_raw_file Data frame with normalized htseq cuartiles
-#' @param quant_raw_file Data frame with normalized quant cuartiles
+#' @param subread_name Data frame with normalized subread cuartiles
+#' @param cuff_name Data frame with normalized cufflink cuartiles
+#' @param htseq_name Data frame with normalized htseq cuartiles
+#' @param quant_name Data frame with normalized quant cuartiles
 #' @param ngenes Selection of genes that we want to filter
 #' @param mfl_number Mean length
 #' @param export_excel_name Name of the final excel name
@@ -15,11 +15,15 @@
 #' @examples
 #' \dontrun{
 #' four_counter2summary (subread_name,cuff_name,quant_name,htseq_name,
-#'                                ngenes = NULL, mfl_number = mfl_number, export_excel_name = "four_together.xlsx", save_intermediate = FALSE)
+#'                                ngenes = NULL, mfl_number = mfl_number,
+#'                                export_excel_name = "four_together.xlsx",
+#'                                save_intermediate = FALSE)
 #' }
 #'
 four_counter2summary <- function(subread_name,cuff_name,quant_name,htseq_name,
-                                ngenes = NULL, mfl_number = mfl_number, export_excel_name = "four_together.xlsx", save_intermediate = FALSE)
+                                ngenes = NULL, mfl_number = mfl_number,
+                                export_excel_name = "four_together.xlsx",
+                                save_intermediate = FALSE)
 {
     semi_subread <- counts2fpkm_subread (subread_name, mfl_num = c(mfl_number))
     semi_cuff <- counts2fpkm_cuff (cuff_name, previous_clean = FALSE)

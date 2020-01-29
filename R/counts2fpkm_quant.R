@@ -21,7 +21,6 @@ counts2fpkm_quant <- function(filename, mfl_num = c(mfl_number))
 
   # Update with biomart  ------------------------------------------------------------
 
-  library("biomaRt")
   annotLookup2 <- ens2symbol(dat$GeneID,attributes_list=c("ensembl_gene_id","hgnc_symbol","ensembl_gene_id", "chromosome_name","start_position","end_position"),
     filter_name="hgnc_symbol")
 
