@@ -19,7 +19,8 @@ ens2symbol <- function(ens_ids, specie = "hsapiens_gene_ensembl",
                        filter_name = "ensembl_gene_id")
 {
   library("biomaRt")
-  mart <- useMart("ENSEMBL_MART_ENSEMBL")
+  # mart <- useMart("ENSEMBL_MART_ENSEMBL")
+  mart <- useEnsembl("ensembl")
   mart <- useDataset(specie, mart)
 
   ens <- as.character(ens_ids)
