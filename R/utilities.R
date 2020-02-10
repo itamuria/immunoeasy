@@ -16,6 +16,8 @@ filter_format_word <- function(filename)
   initialpoint <- lenword-2
   return(substr(filename,initialpoint,lenword))
 }
+
+
 #' Select those elements of a vector with the specified extension
 #'
 #' @param word_vector Vector with several names

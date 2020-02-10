@@ -32,13 +32,21 @@ library(remotes)
 remotes::install_github("itamuria/immunoeasy")
 ```
 
-## Example
+## Obtain information
 
-This is a basic example which shows you how to solve a common problem:
+If we want to know information about an ensemble id we can use the ens2symbol function. For example if we want to know the information about ENSG00000000003 we should do in the next way:
+
+
 
 ```{r example}
 library(immunoeasy)
 ## basic example code
+
+ens2symbol(ens_ids = c("ENSG00000000003"))
+
+
+
+
 ```
 
 ### Load package and data
