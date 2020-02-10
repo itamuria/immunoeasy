@@ -25,6 +25,10 @@ The goal of immunoeasy is to make immunologist life easier with clear functions.
 You can install the released version of immunoeasy from [Github](https://github.com/itamuria/immunoeasy) with:
 
 ``` r
+
+# library(devtools)
+# devtools::install_github("itamuria/immunoeasy")
+library(remotes)
 remotes::install_github("itamuria/immunoeasy")
 ```
 
@@ -37,18 +41,19 @@ library(immunoeasy)
 ## basic example code
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+### Load package and data
 
-```{r cars}
-summary(cars)
+The data can be loaded from github or can be found in the package dataset. 
+
+```{r}
+rm(list = ls())
+time_doc1 <- Sys.time()
+library(immunoeasy)
+if (!require("pacman")) install.packages("pacman")
+library(pacman)
+pacman::p_load(ggplot2, repmis,RColorBrewer,SuperLearner, gam,splines,foreach,glmnet,Matrix,nnet,polspline,e1071,xgboost)
+# Download data
+source_data("https://github.com/itamuria/expose_dataset/blob/master/20180818_dtaset.RData?raw=true")
+set.seed(22222)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
