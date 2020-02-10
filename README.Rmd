@@ -66,10 +66,10 @@ names(count_list)
 
 for(c in 1:length(count_list))
 {
-  write.csv(count_list[[c]], file = paste0(names(count_list)[c],".csv"))
+  write.table(count_list[[c]], file = paste0(names(count_list)[c],".txt"))
 }
 
-htseq_fpkm <- counts2fpkm_htseq (filename = "htseq_counts.csv", mfl_num = c(569))
+htseq_fpkm <- counts2fpkm_htseq (filename = "htseq_counts.txt", mfl_num = c(569))
 
 ```
 
@@ -80,7 +80,7 @@ If we have the htseq file and we want to obtain the fpmk and cuartiles. mfl_numb
 ```{r count2fpkm_quant3}
 
 
-quant_fpkm <- counts2fpkm_quant (filename = "quant_counts.csv", mfl_num = c(569))
+quant_fpkm <- counts2fpkm_quant (filename = "quant_counts.txt", mfl_num = c(569))
 
 
 ```
@@ -91,7 +91,7 @@ If we have the htseq file and we want to obtain the fpmk and cuartiles. mfl_numb
 
 ```{r count2fpkm_subread}
 
-subread_fpkm <- counts2fpkm_subread (filename = "subread_counts.csv", mfl_num = c(569))
+subread_fpkm <- counts2fpkm_subread (filename = "subread_counts.txt", mfl_num = c(569))
 
 
 ```
@@ -103,6 +103,6 @@ If we have the htseq file and we want to obtain the fpmk and cuartiles. mfl_numb
 
 ```{r count2fpkm_cuff, previous_clean = TRUE}
 
-cuff_fpkm <- counts2fpkm_cuff (filename = "cufflink_fpkm.csv", previous_clean = TRUE)
+cuff_fpkm <- counts2fpkm_cuff (filename = "cufflink_fpkm.txt", previous_clean = TRUE)
 
 ```
