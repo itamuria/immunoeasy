@@ -66,7 +66,7 @@ names(count_list)
 
 for(c in 1:length(count_list))
 {
-  write.table(count_list[[c]], file = paste0(names(count_list)[c],".txt"),row.names = FALSE)
+  write.table(count_list[[c]], file = paste0(names(count_list)[c],".txt"),row.names = FALSE, sep = "\t")
 }
 
 htseq_fpkm <- counts2fpkm_htseq (filename = "htseq_counts.txt", mfl_num = c(569))
