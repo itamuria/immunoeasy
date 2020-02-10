@@ -40,28 +40,69 @@ If we want to know information about an ensemble id we can use the ens2symbol fu
 
 ```{r example}
 library(immunoeasy)
+library(knitr)
+library(dplyr)
+library(kableExtra)
 ## basic example code
 
-ens2symbol(ens_ids = c("ENSG00000000003"))
+example_ensg <- ens2symbol(ens_ids = c("ENSG00000000003","ENSG00000184389"))
 
-
+example_ensg %>% 
+    kable() %>%
+    kable_styling()
 
 
 ```
 
-### Load package and data
+### From counts to fpkm from htseq files
 
-The data can be loaded from github or can be found in the package dataset. 
+If we have the htseq file and we want to obtain the fpmk and cuartiles. mfl_number is the average size of the reads. In this case it is 569.
 
-```{r}
-rm(list = ls())
-time_doc1 <- Sys.time()
-library(immunoeasy)
-if (!require("pacman")) install.packages("pacman")
-library(pacman)
-pacman::p_load(ggplot2, repmis,RColorBrewer,SuperLearner, gam,splines,foreach,glmnet,Matrix,nnet,polspline,e1071,xgboost)
-# Download data
-source_data("https://github.com/itamuria/expose_dataset/blob/master/20180818_dtaset.RData?raw=true")
-set.seed(22222)
+```{r count2fpkm_htseq}
+
+repmis::source_data("https://github.com/itamuria/immunoeasy/blob/master/data/immunoeasy_counts.RData?raw=true")
+
+names(count_list)
+
+for(c in 1:length(count_list))
+{
+  write.csv(count_list[[c]], file = paste0(names(count_list)[c],".csv"))
+}
+
+htseq_fpkm <- counts2fpkm_htseq (filename = "htseq_counts.csv", mfl_num = c(569))
+
 ```
 
+### From counts to fpkm from quant3 files
+
+If we have the htseq file and we want to obtain the fpmk and cuartiles. mfl_number is the average size of the reads. In this case it is 569.
+
+```{r count2fpkm_quant3}
+
+
+quant_fpkm <- counts2fpkm_quant (filename = "quant_counts.csv", mfl_num = c(569))
+
+
+```
+
+### From counts to fpkm from subread files
+
+If we have the htseq file and we want to obtain the fpmk and cuartiles. mfl_number is the average size of the reads. In this case it is 569.
+
+```{r count2fpkm_subread}
+
+subread_fpkm <- counts2fpkm_subread (filename = "subread_counts.csv", mfl_num = c(569))
+
+
+```
+
+
+### From counts to fpkm from cuff files
+
+If we have the htseq file and we want to obtain the fpmk and cuartiles. mfl_number is the average size of the reads. In this case it is 569.
+
+```{r count2fpkm_cuff, previous_clean = TRUE}
+
+cuff_fpkm <- counts2fpkm_cuff (filename = "cufflink_fpkm.csv", previous_clean = TRUE)
+
+```
