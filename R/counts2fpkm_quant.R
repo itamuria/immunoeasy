@@ -51,7 +51,7 @@ counts2fpkm_quant <- function(filename, mfl_num = c(mfl_number))
     temp6$GeneID <- paste0(temp6$GeneID,c("a","b"))
     gene_names4 <- rbind(gene_names3,temp6)
   } else {
-    gene_names4 <- gene_names3
+    gene_names4 <- gene_names2
   }
 
   df_calc <- data.frame(gene_names4$Counts,gene_names4$Counts)

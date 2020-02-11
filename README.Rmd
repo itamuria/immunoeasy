@@ -69,7 +69,7 @@ for(c in 1:length(count_list))
   if(c == 4) 
   {
     write.table(count_list[[c]], file = paste0(names(count_list)[c],".txt"),row.names = FALSE, sep = "\t")
-  } if(c == 2)  
+  } else if(c == 2)  
     {
     write.table(count_list[[c]], file = paste0(names(count_list)[c],".txt"))
     }
@@ -78,6 +78,7 @@ for(c in 1:length(count_list))
   }
 }
 
+biomartCacheClear() 
 htseq_fpkm <- counts2fpkm_htseq (filename = "htseq_counts.txt", mfl_num = c(569))
 
 ```
