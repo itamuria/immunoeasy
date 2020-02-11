@@ -69,16 +69,16 @@ for(c in 1:length(count_list))
   if(c == 4) 
   {
     write.table(count_list[[c]], file = paste0(names(count_list)[c],".txt"),row.names = FALSE, sep = "\t")
-  } else if(c == 2)  
+  } else if(c == 3)  
     {
-    write.table(count_list[[c]], file = paste0(names(count_list)[c],".txt"))
+    write.table(count_list[[c]], file = paste0(names(count_list)[c],".txt"), row.names = TRUE)
     }
   else {
     write.table(count_list[[c]], file = paste0(names(count_list)[c],".txt"),row.names = FALSE)
   }
 }
 
-biomartCacheClear() 
+biomaRt::biomartCacheClear() 
 htseq_fpkm <- counts2fpkm_htseq (filename = "htseq_counts.txt", mfl_num = c(569))
 
 ```
@@ -116,3 +116,6 @@ If we have the htseq file and we want to obtain the fpmk and cuartiles. mfl_numb
 cuff_fpkm <- counts2fpkm_cuff (filename = "cufflink_fpkm.txt", previous_clean = TRUE)
 
 ```
+
+
+
