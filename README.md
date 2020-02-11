@@ -1,48 +1,154 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-immunoeasy
-==========
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# immunoeasy
 
 <!-- badges: start -->
 <!-- badges: end -->
-The goal of immunoeasy is to make immunologist life easier with clear functions.
 
-Installation
-------------
+The goal of immunoeasy is to make immunologist life easier with clear functions. 
 
-You can install the released version of immunoeasy from [CRAN](https://CRAN.R-project.org) with:
+## Installation
+
+You can install the released version of immunoeasy from [Github](https://github.com/itamuria/immunoeasy) with:
 
 ``` r
-install.packages("immunoeasy")
+
+# library(devtools)
+# devtools::install_github("itamuria/immunoeasy")
+library(remotes)
+remotes::install_github("itamuria/immunoeasy")
 ```
 
-Example
--------
+## Obtain information
 
-This is a basic example which shows you how to solve a common problem:
+If we want to know information about an ensemble id we can use the ens2symbol function. For example if we want to know the information about ENSG00000000003 we should do in the next way:
 
-``` r
+
+
+```{r example}
 library(immunoeasy)
+library(knitr)
+library(dplyr)
+library(kableExtra)
 ## basic example code
+
+example_ensg <- ens2symbol(ens_ids = c("ENSG00000000003","ENSG00000184389"))
+
+example_ensg %>% 
+    kable() %>%
+    kable_styling()
+
+
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+### From counts to fpkm from htseq files
 
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+If we have the htseq file and we want to obtain the fpmk and cuartiles. mfl_number is the average size of the reads. In this case it is 569.
+
+```{r count2fpkm_htseq}
+
+repmis::source_data("https://github.com/itamuria/immunoeasy/blob/master/data/immunoeasy_counts.RData?raw=true")
+
+names(count_list)
+
+for(c in 1:length(count_list))
+{
+  if(c == 4) 
+  {
+    write.table(count_list[[c]], file = paste0(names(count_list)[c],".txt"),row.names = FALSE, sep = "\t")
+  } else if(c == 3)  
+    {
+    write.table(count_list[[c]], file = paste0(names(count_list)[c],".txt"), row.names = TRUE)
+    }
+  else {
+    write.table(count_list[[c]], file = paste0(names(count_list)[c],".txt"),row.names = FALSE)
+  }
+}
+
+biomaRt::biomartCacheClear() 
+htseq_fpkm <- counts2fpkm_htseq (filename = "htseq_counts.txt", mfl_num = c(569))
+
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
+### From counts to fpkm from quant3 files
 
-You can also embed plots, for example:
+If we have the htseq file and we want to obtain the fpmk and cuartiles. mfl_number is the average size of the reads. In this case it is 569.
 
-<img src="man/figures/README-pressure-1.png" width="100%" />
+```{r count2fpkm_quant3}
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
+
+quant_fpkm <- counts2fpkm_quant (filename = "quant_counts.txt", mfl_num = c(569))
+
+
+```
+
+### From counts to fpkm from subread files
+
+If we have the htseq file and we want to obtain the fpmk and cuartiles. mfl_number is the average size of the reads. In this case it is 569.
+
+```{r count2fpkm_subread}
+
+subread_fpkm <- counts2fpkm_subread (filename = "subread_counts.txt", mfl_num = c(569))
+
+
+```
+
+
+### From counts to fpkm from cuff files
+
+If we have the htseq file and we want to obtain the fpmk and cuartiles. mfl_number is the average size of the reads. In this case it is 569.
+
+```{r count2fpkm_cuff, previous_clean = TRUE}
+
+cuff_fpkm <- counts2fpkm_cuff (filename = "cufflink_fpkm.txt", previous_clean = TRUE)
+
+```
+
+### From variant callers to how many
+
+In this case the function take an excel with several columns and count in how many variant callers are found the mutations. At least we need 4 columns: chromosome, position, gen_name and variant caller. Furthermore, we need to specify the names of the used variant callers. If we want to include more information as VAF and others we should include it. 
+
+
+```{r}
+
+# Example_VariantCallers_PerMutation <- openxlsx::read.xlsx("Example_VariantCallers_PerMutation.xlsx")
+# save(Example_VariantCallers_PerMutation, file = "Example_VariantCallers_PerMutation.RData")
+
+repmis::source_data("https://github.com/itamuria/immunoeasy/blob/master/data/Example_VariantCallers_PerMutation.RData?raw=true")
+
+openxlsx::write.xlsx(Example_VariantCallers_PerMutation, "Example_VariantCallers_PerMutation.xlsx")
+
+Example_VariantCallers_PerMutation %>% kable() %>% kable_styling()
+
+howmany <- varcall2HowMany (filename = "Example_VariantCallers_PerMutation.xlsx", chr_pos = 1, position = 2, gen_name = 3, varian_caller = 12, VAF = NA, others = NULL,var_cal_4 = c("mutect38","somaticsniper", "strelka","varscan"))
+
+howmany2 <- varcall2HowMany (filename = "Example_VariantCallers_PerMutation.xlsx", chr_pos = 1, position = 2, gen_name = 3, varian_caller = 12, VAF = 5, others = c(4,6:11),var_cal_4 = c("mutect38","somaticsniper", "strelka","varscan"))  
+  
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
