@@ -129,12 +129,11 @@ In this case the function take an excel with several columns and count in how ma
 
 repmis::source_data("https://github.com/itamuria/immunoeasy/blob/master/data/Example_VariantCallers_PerMutation.RData?raw=true")
 
+openxlsx::write.xlsx(Example_VariantCallers_PerMutation, "Example_VariantCallers_PerMutation.xlsx")
 
+howmany <- varcall2HowMany (filename = "Example_VariantCallers_PerMutation.xlsx", chr_pos = 1, position = 2, gen_name = 3, varian_caller = 12, VAF = NA, others = NULL,var_cal_4 = c("mutect38","somaticsniper", "strelka","varscan"))
 
-howmany <- varcall2HowMany (filename, chr_pos = 1, position = 2, gen_name = 3, varian_caller = 4, VAF = NA, others = NULL,
-                            var_cal_4 = c("mutect38","somaticsniper", "strelka","varscan"))
-
-  
+howmany2 <- varcall2HowMany (filename = "Example_VariantCallers_PerMutation.xlsx", chr_pos = 1, position = 2, gen_name = 3, varian_caller = 12, VAF = 5, others = c(4,6:11),var_cal_4 = c("mutect38","somaticsniper", "strelka","varscan"))  
   
 ```
 
