@@ -117,5 +117,37 @@ cuff_fpkm <- counts2fpkm_cuff (filename = "cufflink_fpkm.txt", previous_clean = 
 
 ```
 
+### From variant callers to how many
+
+In this case the function take an excel with several columns and count in how many variant callers are found the mutations. At least we need 4 columns: chromosome, position, gen_name and variant caller. Furthermore, we need to specify the names of the used variant callers. If we want to include more information as VAF and others we should include it. 
+
+
+```{r}
+
+# Example_VariantCallers_PerMutation <- openxlsx::read.xlsx("Example_VariantCallers_PerMutation.xlsx")
+# save(Example_VariantCallers_PerMutation, file = "Example_VariantCallers_PerMutation.RData")
+
+repmis::source_data("https://github.com/itamuria/immunoeasy/blob/master/data/Example_VariantCallers_PerMutation.RData?raw=true")
+
+
+
+howmany <- varcall2HowMany (filename, chr_pos = 1, position = 2, gen_name = 3, varian_caller = 4, VAF = NA, others = NULL,
+                            var_cal_4 = c("mutect38","somaticsniper", "strelka","varscan"))
+
+  
+  
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
