@@ -117,6 +117,22 @@ cuff_fpkm <- counts2fpkm_cuff (filename = "cufflink_fpkm.txt", previous_clean = 
 
 ```
 
+
+### Merge all fpkm together
+
+```{r}
+four_counter2summary (semi_subread = subread_fpkm, semi_cuff = cuff_fpkm,
+                      semi_quant = quant_fpkm, semi_htseq = htseq_fpkm,
+                                ngenes = NULL, mfl_number = 569,
+                                export_excel_name = "20200207_four_together_counts.xlsx",
+                                save_final = TRUE)
+```
+
+
+
+
+
+
 ### From variant callers to how many
 
 In this case the function take an excel with several columns and count in how many variant callers are found the mutations. At least we need 4 columns: chromosome, position, gen_name and variant caller. Furthermore, we need to specify the names of the used variant callers. If we want to include more information as VAF and others we should include it. 

@@ -20,16 +20,16 @@
 #'                                save_intermediate = FALSE)
 #' }
 #'
-four_counter2summary <- function(subread_name,cuff_name,quant_name,htseq_name,
+four_counter2summary <- function(semi_subread,semi_cuff,semi_quant,semi_htseq,
                                 ngenes = NULL, mfl_number = mfl_number,
                                 export_excel_name = "four_together.xlsx",
-                                save_intermediate = FALSE)
+                                save_final = FALSE)
 {
-    semi_subread <- counts2fpkm_subread (subread_name, mfl_num = c(mfl_number))
-    semi_cuff <- counts2fpkm_cuff (cuff_name, previous_clean = FALSE)
-    semi_cuff2 <- counts2fpkm_cuff (cuff_name, previous_clean = TRUE)
-    semi_quant <- counts2fpkm_quant (quant_name, mfl_num = c(mfl_number))
-    semi_htseq <- counts2fpkm_htseq (htseq_name, mfl_num = c(mfl_number))
+    # semi_subread <- counts2fpkm_subread (subread_name, mfl_num = c(mfl_number))
+    # semi_cuff <- counts2fpkm_cuff (cuff_name, previous_clean = FALSE)
+    # semi_cuff2 <- counts2fpkm_cuff (cuff_name, previous_clean = TRUE)
+    # semi_quant <- counts2fpkm_quant (quant_name, mfl_num = c(mfl_number))
+    # semi_htseq <- counts2fpkm_htseq (htseq_name, mfl_num = c(mfl_number))
 
   names(semi_cuff) <- c("Gene_id","Symbol","cuff_locus","cuff_FPKM","cuff_Cuartiles")
   semi_cuffb10 <- from_multinames_to_rows (dataset = semi_cuff, colu_name = "Symbol")
@@ -86,8 +86,11 @@ four_counter2summary <- function(subread_name,cuff_name,quant_name,htseq_name,
   mfinal2$dif_ht_cuff2 <- as.numeric(as.character(mfinal2$ht_Cuartiles)) - as.numeric(as.character(mfinal2$cuff2_Cuartiles))
   mfinal2$dif_cuff_cuff2 <- as.numeric(as.character(mfinal2$cuff_Cuartiles)) - as.numeric(as.character(mfinal2$cuff2_Cuartiles))
 
-  openxlsx::write.xlsx(mfinal2, file=export_excel_name)
-  return(list(mfinal2=mfinal2, semi_cuff_c = semi_cuff2b10, semi_htseq2 = semi_htseq2,
-              semi_subread2 = semi_subread2, semi_quant = semi_quant))
+  if(save_final)
+  {
+    openxlsx::write.xlsx(mfinal2, file=export_excel_name)
+  }
+
+  return(mfinal2)
 
 }
