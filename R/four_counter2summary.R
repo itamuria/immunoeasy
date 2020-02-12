@@ -25,12 +25,6 @@ four_counter2summary <- function(semi_subread,semi_cuff,semi_quant,semi_htseq,
                                 export_excel_name = "four_together.xlsx",
                                 save_final = FALSE)
 {
-    # semi_subread <- counts2fpkm_subread (subread_name, mfl_num = c(mfl_number))
-    # semi_cuff <- counts2fpkm_cuff (cuff_name, previous_clean = FALSE)
-    # semi_cuff2 <- counts2fpkm_cuff (cuff_name, previous_clean = TRUE)
-    # semi_quant <- counts2fpkm_quant (quant_name, mfl_num = c(mfl_number))
-    # semi_htseq <- counts2fpkm_htseq (htseq_name, mfl_num = c(mfl_number))
-
   names(semi_cuff) <- c("Gene_id","Symbol","cuff_locus","cuff_FPKM","cuff_Cuartiles")
   semi_cuffb10 <- from_multinames_to_rows (dataset = semi_cuff, colu_name = "Symbol")
   semi_cuffb10 <- semi_cuffb10[,-which(names(semi_cuffb10)=="delete")]
