@@ -49,7 +49,7 @@ four_counter2summary <- function(semi_subread,semi_cuff,semi_quant,semi_htseq,
 
   # merging
 
-  m1_logico <- merge(semi_subread2[semi_subread2$Symbol != "",], semi_quant, by = "Symbol")
+  m1_logico <- merge(semi_subread2[semi_subread2$Symbol != "",], semi_quant2, by = "Symbol")
   m2_logico <- merge(semi_cuffb10, semi_htseq2[semi_htseq2$Symbol != "",], by = "Symbol", all.y = TRUE)
   m2_logico$Symbol <- as.character(m2_logico$Symbol)
   m3_logico <- merge(m1_logico, m2_logico, by = "Symbol", all = TRUE)

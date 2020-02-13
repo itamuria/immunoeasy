@@ -115,12 +115,27 @@ If we have the htseq file and we want to obtain the fpmk and cuartiles. mfl_numb
 
 cuff_fpkm <- counts2fpkm_cuff (filename = "cufflink_fpkm.txt", previous_clean = TRUE)
 
+save(htseq_fpkm, quant_fpkm, subread_fpkm,cuff_fpkm, file="fpkm.RData")
+
+```
+
+### From Variant caller to how many
+
+```{r}
+# selected_genes <- openxlsx::read.xlsx("data/Pac19_four_together4.xlsx")
+# save(selected_genes, file = "Selected_genes.RData")
+
+repmis::source_data("https://github.com/itamuria/immunoeasy/blob/master/data/immunoeasy_counts.RData?raw=true")
+
+
+
 ```
 
 
 ### Merge all fpkm together
 
 ```{r}
+
 four_counter2summary (semi_subread = subread_fpkm, semi_cuff = cuff_fpkm,
                       semi_quant = quant_fpkm, semi_htseq = htseq_fpkm,
                                 ngenes = NULL, mfl_number = 569,
