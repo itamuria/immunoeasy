@@ -29,10 +29,10 @@ four_counter2summary <- function(semi_subread,semi_cuff,semi_quant,semi_htseq,
   semi_cuffb10 <- from_multinames_to_rows (dataset = semi_cuff, colu_name = "Symbol")
   semi_cuffb10 <- semi_cuffb10[,-which(names(semi_cuffb10)=="delete")]
 
-  names(semi_cuff2) <- c("Gene_id","Symbol","cuff2_locus","cuff2_FPKM","cuff2_Cuartiles")
-  semi_cuff2b10 <- from_multinames_to_rows (dataset = semi_cuff2, colu_name = "Symbol")
-  semi_cuff2b10 <- semi_cuff2b10[,-which(names(semi_cuff2b10)=="delete")]
-  semi_cuff2b10 <- semi_cuff2b10[which(semi_cuff2b10$cuff2_locus%in%grep("^C|^G",semi_cuff2b10$cuff2_locus, value=TRUE, invert = TRUE)),]
+  # names(semi_cuff2) <- c("Gene_id","Symbol","cuff2_locus","cuff2_FPKM","cuff2_Cuartiles")
+  # semi_cuff2b10 <- from_multinames_to_rows (dataset = semi_cuff2, colu_name = "Symbol")
+  # semi_cuff2b10 <- semi_cuff2b10[,-which(names(semi_cuff2b10)=="delete")]
+  # semi_cuff2b10 <- semi_cuff2b10[which(semi_cuff2b10$cuff2_locus%in%grep("^C|^G",semi_cuff2b10$cuff2_locus, value=TRUE, invert = TRUE)),]
 
   semi_htseq2 <- semi_htseq[,c(1,6,5,2,4)]
   semi_htseq2$ht_locus <- paste0(semi_htseq$chromosome_name,":",semi_htseq$start_position,"-",semi_htseq$end_position)
@@ -50,7 +50,7 @@ four_counter2summary <- function(semi_subread,semi_cuff,semi_quant,semi_htseq,
   # merging
 
   m1_logico <- merge(semi_subread2[semi_subread2$Symbol != "",], semi_quant, by = "Symbol")
-  m2_logico <- merge(semi_cuff2b10, semi_htseq2[semi_htseq2$Symbol != "",], by = "Symbol", all.y = TRUE)
+  m2_logico <- merge(semi_cuffb10, semi_htseq2[semi_htseq2$Symbol != "",], by = "Symbol", all.y = TRUE)
   m2_logico$Symbol <- as.character(m2_logico$Symbol)
   m3_logico <- merge(m1_logico, m2_logico, by = "Symbol", all = TRUE)
 
