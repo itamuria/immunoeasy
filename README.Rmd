@@ -79,7 +79,8 @@ for(c in 1:length(count_list))
 }
 
 biomaRt::biomartCacheClear() 
-htseq_fpkm <- counts2fpkm_htseq (filename = "htseq_counts.txt", mfl_num = c(569))
+mfl_num_z <- 569
+#htseq_fpkm <- counts2fpkm_htseq (filename = "htseq_counts.txt", mfl_num = c(mfl_num_z))
 
 ```
 
@@ -90,7 +91,7 @@ If we have the htseq file and we want to obtain the fpmk and cuartiles. mfl_numb
 ```{r count2fpkm_quant3}
 
 
-quant_fpkm <- counts2fpkm_quant (filename = "quant_counts.txt", mfl_num = c(569))
+quant_fpkm <- counts2fpkm_quant (filename = "quant_counts.txt", mfl_num = c(mfl_num_z))
 
 
 ```
@@ -101,7 +102,7 @@ If we have the htseq file and we want to obtain the fpmk and cuartiles. mfl_numb
 
 ```{r count2fpkm_subread}
 
-subread_fpkm <- counts2fpkm_subread (filename = "subread_counts.txt", mfl_num = c(569))
+subread_fpkm <- counts2fpkm_subread (filename = "subread_counts.txt", mfl_num = c(mfl_num_z))
 
 
 ```
@@ -125,29 +126,11 @@ save(htseq_fpkm, quant_fpkm, subread_fpkm,cuff_fpkm, file="fpkm.RData")
 # selected_genes <- openxlsx::read.xlsx("data/Pac19_four_together4.xlsx")
 # save(selected_genes, file = "Selected_genes.RData")
 
-repmis::source_data("https://github.com/itamuria/immunoeasy/blob/master/data/immunoeasy_counts.RData?raw=true")
+repmis::source_data("https://github.com/itamuria/immunoeasy/blob/master/data/Selected_genes.RData?raw=true")
 
 
 
 ```
-
-
-### Merge all fpkm together
-
-```{r}
-
-four_counter2summary (semi_subread = subread_fpkm, semi_cuff = cuff_fpkm,
-                      semi_quant = quant_fpkm, semi_htseq = htseq_fpkm,
-                                ngenes = NULL, mfl_number = 569,
-                                export_excel_name = "20200207_four_together_counts.xlsx",
-                                save_final = TRUE)
-```
-
-
-
-
-
-
 ### From variant callers to how many
 
 In this case the function take an excel with several columns and count in how many variant callers are found the mutations. At least we need 4 columns: chromosome, position, gen_name and variant caller. Furthermore, we need to specify the names of the used variant callers. If we want to include more information as VAF and others we should include it. 
@@ -169,6 +152,26 @@ howmany <- varcall2HowMany (filename = "Example_VariantCallers_PerMutation.xlsx"
 howmany2 <- varcall2HowMany (filename = "Example_VariantCallers_PerMutation.xlsx", chr_pos = 1, position = 2, gen_name = 3, varian_caller = 12, VAF = 5, others = c(4,6:11),var_cal_4 = c("mutect38","somaticsniper", "strelka","varscan"))  
   
 ```
+
+### Merge all fpkm together
+
+```{r}
+
+repmis::source_data("https://github.com/itamuria/immunoeasy/blob/master/data/fpkm.RData?raw=true")
+
+final_dataframe <- four_counter2summary (semi_subread = subread_fpkm, semi_cuff = cuff_fpkm,
+                      semi_quant = quant_fpkm, semi_htseq = htseq_fpkm,
+                                ngenes = selected_genes$Symbol,
+                                export_excel_name = "20200207_four_together_counts_pac5_10619.xlsx",
+                                save_final = TRUE, dif_cuartiles = FALSE)
+```
+
+
+
+
+
+
+
 
 
 
