@@ -8,9 +8,12 @@ Authors@R:
            email = "itamuria@gmail.com",
            comment = c(ORCID = "0000-0002-8183-7106"))
 Description: This package will help immunologist to analyse their data faster and easier. 
+URL: https://github.com/itamuria/immunoeasy
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
+Depends: 
+    R (>= 3.5.0)
 RoxygenNote: 7.0.2
 Imports:
     biomaRt,

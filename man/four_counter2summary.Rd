@@ -5,30 +5,32 @@
 \title{Merge all the counters together}
 \usage{
 four_counter2summary(
-  subread_name,
-  cuff_name,
-  quant_name,
-  htseq_name,
+  semi_subread,
+  semi_cuff,
+  semi_quant,
+  semi_htseq,
   ngenes = NULL,
-  mfl_number = mfl_number,
   export_excel_name = "four_together.xlsx",
-  save_intermediate = FALSE
+  save_final = FALSE,
+  dif_cuartiles = FALSE
 )
 }
 \arguments{
+\item{ngenes}{Selection of genes that we want to filter}
+
+\item{export_excel_name}{Name of the final excel name}
+
+\item{dif_cuartiles}{If we want to calculate the differences between cuartiles}
+
 \item{subread_name}{Data frame with normalized subread cuartiles}
 
 \item{cuff_name}{Data frame with normalized cufflink cuartiles}
 
-\item{quant_name}{Data frame with normalized quant cuartiles}
-
 \item{htseq_name}{Data frame with normalized htseq cuartiles}
 
-\item{ngenes}{Selection of genes that we want to filter}
+\item{quant_name}{Data frame with normalized quant cuartiles}
 
 \item{mfl_number}{Mean length}
-
-\item{export_excel_name}{Name of the final excel name}
 
 \item{save_intermediate}{If we want to save intermediate files}
 }
