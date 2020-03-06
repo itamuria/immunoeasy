@@ -54,6 +54,20 @@ example_ensg %>%
 
 ```
 
+### From vcf to different analysis
+
+Variant callers create vcf files. This files have a defined structure and usually it is used for downstream analysis. Here we can do:
+
+- From vcf to excel
+- From vcf to potential neoantigen selection
+
+```{r vcf2x}
+
+
+
+```
+
+
 ### From counts to fpkm from htseq files
 
 If we have the htseq file and we want to obtain the fpmk and cuartiles. mfl_number is the average size of the reads. In this case it is 569.

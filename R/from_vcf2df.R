@@ -1,16 +1,18 @@
-#' From vcf to excel by mutect38_v2
+#' From vcf to excel by mutect38__2df
 #'
 #' @param name_vcffile The name of the vcf file
+#' @param excel If we want to export to excel (boolean)
+#' @param excel_file Name of the output excel file.
 
 #' @return data frame with ordered information
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' mutect38_v2 (name_vcffile)
+#' mutect38__2df (name_vcffile)
 #' }
 #'
-mutect38_v2 <- function(name_vcffile)
+mutect38_2df <- function(name_vcffile, excel = False, excel_file = "20200306_Mutect.xlsx")
 {
 
   vcffile <- read.table(name_vcffile)
@@ -71,58 +73,6 @@ mutect38_v2 <- function(name_vcffile)
   col211b <- data.frame(matrix(col211,ncol = 11,byrow = TRUE))
   col211c <- col211b
   names(col211c) <- names9
-  # }
-
-  #
-  # if(sum(name_group==c(1,2))==0)
-  # {
-  #   # GROUP 3
-  #   g3_10 <- as.character(vcffile$V10[vcffile$group==3])
-  #   g3_11 <- as.character(vcffile$V11[vcffile$group==3])
-  #   id_3 <- vcffile$ID[vcffile$group==3]
-  #
-  #   col310 <- unlist(strsplit(g3_10,":"))
-  #   col310b <- data.frame(matrix(col310,ncol = 6,byrow = TRUE))
-  #   col310c <- cbind(col310b[,1:5],rep(NA,nrow(col310b)),rep(NA,nrow(col310b)),rep(NA,nrow(col310b)),col310b[,6])
-  #   names(col310c) <- names9
-  #
-  #   col311 <- unlist(strsplit(g3_11,":"))
-  #   col311b <- data.frame(matrix(col311,ncol = 6,byrow = TRUE))
-  #   col311c <- cbind(col311b[,1:5],rep(NA,nrow(col311b)),rep(NA,nrow(col311b)),rep(NA,nrow(col311b)),col311b[,6:8])
-  #   names(col311c) <- names9
-  #
-  #   # GROUP 4
-  #   g4_10 <- as.character(vcffile$V10[vcffile$group==4])
-  #   g4_11 <- as.character(vcffile$V11[vcffile$group==4])
-  #   id_4 <- vcffile$ID[vcffile$group==4]
-  #
-  #   col410 <- unlist(strsplit(g4_10,":"))
-  #   col410b <- data.frame(matrix(col410,ncol = 10,byrow = TRUE))
-  #   col410c <- cbind(col410b[,1:5],rep(NA,nrow(col410b)),col410b[,6:10])
-  #   names(col410c) <- names9
-  #
-  #   col411 <- unlist(strsplit(g4_11,":"))
-  #   col411b <- data.frame(matrix(col411,ncol = 10,byrow = TRUE))
-  #   col411c <- cbind(col411b[,1:5],rep(NA,nrow(col411b)),col411b[,6:10])
-  #   names(col411c) <- names9
-  #
-  #   id_t <- c(id_1,id_2,id_3,id_4)
-  #   dfcol <- rbind(col10c,col210c,col310c,col410c)
-  #   dfcol3 <- rbind(col11c,col211c,col311c,col411c)
-  #   dfcol2 <- cbind(id_t,dfcol,dfcol3)
-  #   dfcol2 <- dfcol2[order(dfcol2$id_t),]
-  #   names(dfcol2)[13:23]<- paste0(names(dfcol2)[2:12],"_tum")
-  #
-  #   ad1 <- data.frame(matrix(unlist(strsplit(as.character(dfcol2$AD),",")),ncol = 2,byrow = TRUE))
-  #   names(ad1) <- c("AD_ref","AD_alt")
-  #   gss1 <- data.frame(matrix(unlist(strsplit(as.character(dfcol2$QSS),",")),ncol = 2,byrow = TRUE))
-  #   names(gss1) <- c("QSS_ref","QSS_alt")
-  #
-  #   ad1b <- data.frame(matrix(unlist(strsplit(as.character(dfcol2$AD_tum),",")),ncol = 2,byrow = TRUE))
-  #   names(ad1b) <- c("AD_ref_tum","AD_alt_tum")
-  #   gss1b <- data.frame(matrix(unlist(strsplit(as.character(dfcol2$QSS_tum),",")),ncol = 2,byrow = TRUE))
-  #   names(gss1b) <- c("QSS_ref_tum","QSS_alt_tum")
-  # }
 
   # GROUP 3
   g3_10 <- as.character(vcffile$V10[vcffile$group==3])
@@ -206,6 +156,8 @@ mutect38_v2 <- function(name_vcffile)
 
   dftot <- dftot[,!is.na(names(dftot))]
 
+  if(excel) openxlsx::write.xlsx(dftot, file = excel_file)
+
   return(dftot)
 
 }
@@ -213,6 +165,8 @@ mutect38_v2 <- function(name_vcffile)
 #' From vcf to excel by Strelka
 #'
 #' @param name_vcffile The name of the vcf file
+#' @param excel If we want to export to excel (boolean)
+#' @param excel_file Name of the output excel file.
 
 #' @return data frame with ordered information
 #' @export
@@ -223,7 +177,7 @@ mutect38_v2 <- function(name_vcffile)
 #' }
 #'
 # cuidado con GT, no quitar o cambiar codigo despues de cambiar
-strelka_2_excel <- function(name_vcffile)
+strelka_2_excel <- function(name_vcffile, excel = False, excel_file = "20200306_strelka.xlsx")
 {
   vcffile <- read.table(name_vcffile)
   # separate format
@@ -392,7 +346,7 @@ strelka_2_excel <- function(name_vcffile)
   dftot$VAF_T2 <- dftot$Alt_T2_2/(dftot$Alt_T2_2+dftot$Ref_T2_2)
 
   # ff <- dftot$Ref_T1-dftot$Alt_T1
-
+  if(excel) openxlsx::write.xlsx(dftot, file = excel_file)
   # aggregate(ff,by=list(dftot$NT),FUN=function(x) c(min(x),mean(x),max(x)))
   return(dftot)
 
@@ -401,7 +355,9 @@ strelka_2_excel <- function(name_vcffile)
 #' From vcf to excel by Strelka fast version
 #'
 #' @param name_vcffile The name of the vcf file
-
+#' @param excel If we want to export to excel (boolean)
+#' @param excel_file Name of the output excel file.
+#'
 #' @return data frame with ordered information
 #' @export
 #'
@@ -410,7 +366,7 @@ strelka_2_excel <- function(name_vcffile)
 #' strelka_2_excel (name_vcffile)
 #' }
 #'
-strelka_2_excel_snvs_fast <- function(name_vcffile)
+strelka_2_excel_snvs_fast <- function(name_vcffile, excel = False, excel_file = "20200306_strelka_snvs.xlsx")
 {
   vcffile <- read.table(name_vcffile)
   # separate format
@@ -572,6 +528,8 @@ strelka_2_excel_snvs_fast <- function(name_vcffile)
 
   # aggregate(ff,by=list(dftot$NT),FUN=function(x) c(min(x),mean(x),max(x)))
 
+  if(excel) openxlsx::write.xlsx(dftot, file = excel_file)
+
   return(dftot)
 
 }
@@ -579,7 +537,9 @@ strelka_2_excel_snvs_fast <- function(name_vcffile)
 #' From vcf to excel by Strelka for indels
 #'
 #' @param name_vcffile The name of the vcf file
-
+#' @param excel If we want to export to excel (boolean)
+#' @param excel_file Name of the output excel file.
+#'
 #' @return data frame with ordered information
 #' @export
 #'
@@ -588,7 +548,7 @@ strelka_2_excel_snvs_fast <- function(name_vcffile)
 #' strelka_2_excel (name_vcffile)
 #' }
 #'
-strelka_indels_2_excel <- function(name_vcffile)
+strelka_indels_2_excel <- function(name_vcffile, excel = False, excel_file = "20200306_strelka_indels.xlsx")
 {
   vcffile <- read.table(name_vcffile)
   # separate format
@@ -683,6 +643,8 @@ strelka_indels_2_excel <- function(name_vcffile)
     dftot[,g] <- as.numeric(as.character(dftot[,g]))
   }
 
+  if(excel) openxlsx::write.xlsx(dftot, file = excel_file)
+
   return(dftot)
 
 }
@@ -690,7 +652,9 @@ strelka_indels_2_excel <- function(name_vcffile)
 #' From vcf to excel by somatic sniper
 #'
 #' @param name_vcffile The name of the vcf file
-
+#' @param excel If we want to export to excel (boolean)
+#' @param excel_file Name of the output excel file.
+#'
 #' @return data frame with ordered information
 #' @export
 #'
@@ -699,7 +663,7 @@ strelka_indels_2_excel <- function(name_vcffile)
 #' strelka_2_excel (name_vcffile)
 #' }
 #'
-somaticsniper_2_excel <- function(name_vcffile)
+somaticsniper_2_excel <- function(name_vcffile, excel = False, excel_file = "20200306_somaticsniper.xlsx")
 {
   vcffile <- read.table(name_vcffile)
   # separate format
@@ -796,6 +760,8 @@ somaticsniper_2_excel <- function(name_vcffile)
   })
   dftot <- dftot[,!nakendu]
 
+  if(excel) openxlsx::write.xlsx(dftot, file = excel_file)
+
   return(dftot)
 
 }
@@ -803,7 +769,9 @@ somaticsniper_2_excel <- function(name_vcffile)
 #' From vcf to excel by varscan
 #'
 #' @param name_vcffile The name of the vcf file
-
+#' @param excel If we want to export to excel (boolean)
+#' @param excel_file Name of the output excel file.
+#'
 #' @return data frame with ordered information
 #' @export
 #'
@@ -812,7 +780,7 @@ somaticsniper_2_excel <- function(name_vcffile)
 #' strelka_2_excel (name_vcffile)
 #' }
 #'
-varscan_2_excel <- function(name_vcffile)
+varscan_2_excel <- function(name_vcffile, excel = False, excel_file = "20200306_varscan.xlsx")
 {
   vcffile <- read.table(name_vcffile)
   # separate format
@@ -933,6 +901,8 @@ varscan_2_excel <- function(name_vcffile)
 
   names(dftot)[which(names(dftot)=="FREQ")] <- "Nor_VAF"
   names(dftot)[which(names(dftot)=="Tum_FREQ")] <- "Tum_VAF"
+
+  if(excel) openxlsx::write.xlsx(dftot, file = excel_file)
 
 
   return(dftot)

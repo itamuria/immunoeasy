@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of immunoeasy is to make immunologist life easier with clear functions. 
+The goal of immunoeasy is to make immunologists' life easier with clear functions. 
 
 ## Installation
 
@@ -50,6 +50,18 @@ example_ensg <- ens2symbol(ens_ids = c("ENSG00000000003","ENSG00000184389"))
 example_ensg %>% 
     kable() %>%
     kable_styling()
+
+```
+
+### From vcf to different analysis
+
+Variant callers create vcf files. This files have a defined structure and usually it is used for downstream analysis. Here we can do:
+
+- From vcf to excel
+- From vcf to potential neoantigen selection
+
+```{r vcf2}
+
 
 
 ```
