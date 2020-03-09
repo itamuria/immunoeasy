@@ -15,7 +15,7 @@ counts2fpkm_quant <- function(filename, mfl_num = c(mfl_number))
 {
   # Load data  ------------------------------------------------------------
 
-  dat <- read.table(filename, header = TRUE)
+  dat <- utils::read.table(filename, header = TRUE)
   dat <- data.frame(rownames(dat),dat[,1])
   names(dat) <- c("GeneID","Counts")
 

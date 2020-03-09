@@ -4,7 +4,7 @@
 \alias{counts2fpkm_htseq}
 \title{From counts to fpkm and quartiles with htseq files}
 \usage{
-counts2fpkm_htseq(filename, mfl_num = c(mfl_number))
+counts2fpkm_htseq(filename, mfl_num = 200)
 }
 \arguments{
 \item{filename}{The name of the file with htseq counts}

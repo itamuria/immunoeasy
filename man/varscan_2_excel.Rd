@@ -6,7 +6,7 @@
 \usage{
 varscan_2_excel(
   name_vcffile,
-  excel = False,
+  excel = FALSE,
   excel_file = "20200306_varscan.xlsx"
 )
 }

@@ -153,6 +153,8 @@ In this case the function take an excel with several columns and count in how ma
 # Example_VariantCallers_PerMutation <- openxlsx::read.xlsx("Example_VariantCallers_PerMutation.xlsx")
 # save(Example_VariantCallers_PerMutation, file = "Example_VariantCallers_PerMutation.RData")
 
+Example_VariantCallers_PerMutation <- NULL
+
 repmis::source_data("https://github.com/itamuria/immunoeasy/blob/master/data/Example_VariantCallers_PerMutation.RData?raw=true")
 
 openxlsx::write.xlsx(Example_VariantCallers_PerMutation, "Example_VariantCallers_PerMutation.xlsx")

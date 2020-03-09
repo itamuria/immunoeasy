@@ -15,13 +15,13 @@ counts2fpkm_subread <- function(filename, mfl_num = c(mfl_number))
 {
   # Load data  ------------------------------------------------------------
 
-  dat <- read.table(filename, header = T)
+  dat <- utils::read.table(filename, header = T)
   dat <- dat[,c("Geneid", names(dat)[ncol(dat)])]
   names(dat) <- c("GeneID","Counts")
 
   # Obtain symbols and length  ------------------------------------------------------------
 
-  library("biomaRt")
+  # library("biomaRt")
   annotLookup2 <- ens2symbol(dat$GeneID)
 
   # ENS ID generalizing   ------------------------------------------------------------
@@ -42,8 +42,6 @@ counts2fpkm_subread <- function(filename, mfl_num = c(mfl_number))
   gene_names2 <- merge(dat, annotLookup2, by.x = "GeneID", by.y = "ensembl_gene_id")
 
   # Prepare for FPKM ------------------------------------------------------------
-
-  library(countToFPKM)
 
   # repeat if we have only one patient information
   mfl <- c(rep(mfl_num,2))

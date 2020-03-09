@@ -12,10 +12,10 @@
 #' mutect38__2df (name_vcffile)
 #' }
 #'
-mutect38_2df <- function(name_vcffile, excel = False, excel_file = "20200306_Mutect.xlsx")
+mutect38_2df <- function(name_vcffile, excel = FALSE, excel_file = "20200306_Mutect.xlsx")
 {
 
-  vcffile <- read.table(name_vcffile)
+  vcffile <- utils::read.table(name_vcffile)
   # separate format
   vcffile$V9 <- as.character(vcffile$V9)
   fox <- grep("FOXOG",vcffile$V9)
@@ -127,8 +127,7 @@ mutect38_2df <- function(name_vcffile, excel = False, excel_file = "20200306_Mut
   ### INFO
   f8 <- vcffile$V8
 
-  library(tidyr)
-  s1 <- separate(data = vcffile, col = V8, into = paste0("a",1:58), sep = ";")
+  s1 <- tidyr::separate(data = vcffile, col = "V8", into = paste0("a",1:58), sep = ";")
   s2 <- s1[,c(8:65)]
   s2[grep("RPA",s2$a6),names(s2)] <- s2[grep("RPA",s2$a6),names(s2)[-c(6:8)]]
 
@@ -177,9 +176,9 @@ mutect38_2df <- function(name_vcffile, excel = False, excel_file = "20200306_Mut
 #' }
 #'
 # cuidado con GT, no quitar o cambiar codigo despues de cambiar
-strelka_2_excel <- function(name_vcffile, excel = False, excel_file = "20200306_strelka.xlsx")
+strelka_2_excel <- function(name_vcffile, excel = FALSE, excel_file = "20200306_strelka.xlsx")
 {
-  vcffile <- read.table(name_vcffile)
+  vcffile <- utils::read.table(name_vcffile)
   # separate format
   vcffile$V9 <- as.character(vcffile$V9)
   vcffile$ID <- 1:(nrow(vcffile))
@@ -244,8 +243,7 @@ strelka_2_excel <- function(name_vcffile, excel = False, excel_file = "20200306_
   ### INFO
   f8 <- vcffile$V8
 
-  library(tidyr)
-  s1 <- separate(data = vcffile, col = V8, into = paste0("a",1:60), sep = ";")
+  s1 <- tidyr::separate(data = vcffile, col = "V8", into = paste0("a",1:60), sep = ";")
   s2 <- s1[,c(8:67)]
   snames <- unlist(strsplit(as.character(s2[1,]),"="))
   snames2 <- snames[c(1,seq(2,118,by = 2))]
@@ -366,9 +364,9 @@ strelka_2_excel <- function(name_vcffile, excel = False, excel_file = "20200306_
 #' strelka_2_excel (name_vcffile)
 #' }
 #'
-strelka_2_excel_snvs_fast <- function(name_vcffile, excel = False, excel_file = "20200306_strelka_snvs.xlsx")
+strelka_2_excel_snvs_fast <- function(name_vcffile, excel = FALSE, excel_file = "20200306_strelka_snvs.xlsx")
 {
-  vcffile <- read.table(name_vcffile)
+  vcffile <- utils::read.table(name_vcffile)
   # separate format
   vcffile$V9 <- as.character(vcffile$V9)
   vcffile$ID <- 1:(nrow(vcffile))
@@ -433,8 +431,7 @@ strelka_2_excel_snvs_fast <- function(name_vcffile, excel = False, excel_file = 
   ### INFO
   f8 <- vcffile$V8
 
-  library(tidyr)
-  s1 <- separate(data = vcffile, col = V8, into = paste0("a",1:60), sep = ";")
+  s1 <- tidyr::separate(data = vcffile, col = "V8", into = paste0("a",1:60), sep = ";")
   s2 <- s1[,c(8:67)]
   snames <- unlist(strsplit(as.character(s2[1,]),"="))
   snames2 <- snames[c(1,seq(2,118,by = 2))]
@@ -548,9 +545,9 @@ strelka_2_excel_snvs_fast <- function(name_vcffile, excel = False, excel_file = 
 #' strelka_2_excel (name_vcffile)
 #' }
 #'
-strelka_indels_2_excel <- function(name_vcffile, excel = False, excel_file = "20200306_strelka_indels.xlsx")
+strelka_indels_2_excel <- function(name_vcffile, excel = FALSE, excel_file = "20200306_strelka_indels.xlsx")
 {
-  vcffile <- read.table(name_vcffile)
+  vcffile <- utils::read.table(name_vcffile)
   # separate format
   vcffile$V9 <- as.character(vcffile$V9)
   vcffile$ID <- 1:(nrow(vcffile))
@@ -609,8 +606,7 @@ strelka_indels_2_excel <- function(name_vcffile, excel = False, excel_file = "20
   ### INFO
   f8 <- vcffile$V8
 
-  library(tidyr)
-  s1 <- separate(data = vcffile, col = V8, into = paste0("a",1:60), sep = ";")
+  s1 <- tidyr::separate(data = vcffile, col = "V8", into = paste0("a",1:60), sep = ";")
   s2 <- s1[,c(8:67)]
   snames <- unlist(strsplit(as.character(s2[1,]),"="))
   snames2 <- snames[c(1,seq(2,118,by = 2))]
@@ -663,9 +659,9 @@ strelka_indels_2_excel <- function(name_vcffile, excel = False, excel_file = "20
 #' strelka_2_excel (name_vcffile)
 #' }
 #'
-somaticsniper_2_excel <- function(name_vcffile, excel = False, excel_file = "20200306_somaticsniper.xlsx")
+somaticsniper_2_excel <- function(name_vcffile, excel = FALSE, excel_file = "20200306_somaticsniper.xlsx")
 {
-  vcffile <- read.table(name_vcffile)
+  vcffile <- utils::read.table(name_vcffile)
   # separate format
   vcffile$V9 <- as.character(vcffile$V9)
   vcffile$ID <- 1:(nrow(vcffile))
@@ -734,8 +730,7 @@ somaticsniper_2_excel <- function(name_vcffile, excel = False, excel_file = "202
   ### INFO
   f8 <- vcffile$V8
 
-  library(tidyr)
-  s1 <- separate(data = vcffile, col = V8, into = paste0("a",1:48), sep = ";")
+  s1 <- tidyr::separate(data = vcffile, col = "V8", into = paste0("a",1:48), sep = ";")
   s2 <- s1[,c(8:58)]
   snames <- unlist(strsplit(as.character(s2[1,]),"="))
   snames2 <- snames[c(seq(2,94,by = 2))]
@@ -780,9 +775,9 @@ somaticsniper_2_excel <- function(name_vcffile, excel = False, excel_file = "202
 #' strelka_2_excel (name_vcffile)
 #' }
 #'
-varscan_2_excel <- function(name_vcffile, excel = False, excel_file = "20200306_varscan.xlsx")
+varscan_2_excel <- function(name_vcffile, excel = FALSE, excel_file = "20200306_varscan.xlsx")
 {
-  vcffile <- read.table(name_vcffile)
+  vcffile <- utils::read.table(name_vcffile)
   # separate format
   vcffile$V9 <- as.character(vcffile$V9)
   vcffile$ID <- 1:(nrow(vcffile))
@@ -836,8 +831,7 @@ varscan_2_excel <- function(name_vcffile, excel = False, excel_file = "20200306_
   ### INFO
   f8 <- vcffile$V8
 
-  library(tidyr)
-  s1 <- separate(data = vcffile, col = V8, into = paste0("a",1:53), sep = ";")
+  s1 <- tidyr::separate(data = vcffile, col = "V8", into = paste0("a",1:53), sep = ";")
   s2 <- s1[,c(8,10:60)]
   # s2 <- s2[,-2]
   snames <- unlist(strsplit(as.character(s2[1,]),"="))

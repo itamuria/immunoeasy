@@ -14,7 +14,7 @@
 counts2fpkm_cuff <- function(filename, previous_clean = FALSE)
 {
   # Load data  ------------------------------------------------------------
-  dat <- read.table(filename, header = T, sep = "\t")
+  dat <- utils::read.table(filename, header = T, sep = "\t")
   dat <- dat[,c("gene_id", "gene_short_name", "locus", "FPKM")]
 
   if(previous_clean){

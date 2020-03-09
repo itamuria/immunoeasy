@@ -11,11 +11,11 @@
 #' counts2fpkm_htseq (filename, mfl_num = c(mfl_number))
 #' }
 #'
-counts2fpkm_htseq <- function(filename, mfl_num = c(mfl_number))
+counts2fpkm_htseq <- function(filename, mfl_num = 200)
 {
 
   # Load data  ------------------------------------------------------------
-  dat <- read.table(filename, header = TRUE)
+  dat <- utils::read.table(filename, header = TRUE)
   names(dat) <- c("GeneID","Counts")
 
   # Obtain symbols and length  ------------------------------------------------------------

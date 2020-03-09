@@ -4,7 +4,7 @@
 \alias{mutect38_2df}
 \title{From vcf to excel by mutect38__2df}
 \usage{
-mutect38_2df(name_vcffile, excel = False, excel_file = "20200306_Mutect.xlsx")
+mutect38_2df(name_vcffile, excel = FALSE, excel_file = "20200306_Mutect.xlsx")
 }
 \arguments{
 \item{name_vcffile}{The name of the vcf file}

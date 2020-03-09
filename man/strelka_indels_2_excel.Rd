@@ -6,7 +6,7 @@
 \usage{
 strelka_indels_2_excel(
   name_vcffile,
-  excel = False,
+  excel = FALSE,
   excel_file = "20200306_strelka_indels.xlsx"
 )
 }

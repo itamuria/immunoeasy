@@ -6,7 +6,7 @@
 \usage{
 strelka_2_excel_snvs_fast(
   name_vcffile,
-  excel = False,
+  excel = FALSE,
   excel_file = "20200306_strelka_snvs.xlsx"
 )
 }

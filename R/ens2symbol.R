@@ -4,7 +4,7 @@
 #' @description Search symbols from ENG ids and calculate the length of the gene
 #'
 #' @param ens_ids a vector with the ensemble ids
-#' @param especie Specie that we want to get information from
+#' @param specie Specie that we want to get information from
 #' @param attributes_list attributes that we want to obtain in the last table
 #' @param filter_name the source information
 #'
@@ -18,15 +18,15 @@ ens2symbol <- function(ens_ids, specie = "hsapiens_gene_ensembl",
                        attributes_list = c("ensembl_gene_id","hgnc_symbol","ensembl_gene_id", "chromosome_name","start_position","end_position"),
                        filter_name = "ensembl_gene_id")
 {
-  library("biomaRt")
+
   # mart <- useMart("ENSEMBL_MART_ENSEMBL")
-  mart <- useEnsembl("ensembl")
-  mart <- useDataset(specie, mart)
+  mart <- biomaRt::useEnsembl("ensembl")
+  mart <- biomaRt::useDataset(specie, mart)
 
   ens <- as.character(ens_ids)
   ens2 <- gsub('\\..+$', '', ens)
 
-  annotLookup2 <- getBM(
+  annotLookup2 <- biomaRt::getBM(
     mart = mart,
     attributes = c("ensembl_gene_id", "hgnc_symbol", "ensembl_gene_id", "chromosome_name", "start_position", "end_position"),
     filter = filter_name,
