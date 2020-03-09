@@ -13,7 +13,7 @@
 filter_format_word <- function(filename)
 {
   lenword <- nchar(filename)
-  initialpoint <- lenword-2
+  initialpoint <- lenword - 2
   return(substr(filename,initialpoint,lenword))
 }
 
