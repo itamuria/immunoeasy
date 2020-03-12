@@ -79,7 +79,7 @@ varcall2HowMany <- function(filename, chr_pos = 1, position = 2, gen_name = 3, v
     if(!is.na(VAF))
     {
       df_out$VAFmean[h] <- mean(temp[,VAF], na.rm = TRUE)
-      df_out$VAFsd[h] <- sd(temp[,VAF], na.rm = TRUE)
+      df_out$VAFsd[h] <- stats::sd(temp[,VAF], na.rm = TRUE)
 
     }
 
