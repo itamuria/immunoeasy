@@ -59,7 +59,7 @@ select_files_format <- function(word_vector, formatw = "vcf")
 day_hour <- function(time1) {
   if (time1 == "day") {
     day <- paste(strsplit(as.character(substring(Sys.time(), 1, 10)), "-")[[1]], collapse = "")
-    fetxia <- day
+    fetxia <-  day
 
   } else if (time1 == "hour") {
     hour <- paste0(substring(Sys.time(), 12, 13), "h", substring(Sys.time(), 15, 16), "m", substring(Sys.time(), 18,19), "s")
