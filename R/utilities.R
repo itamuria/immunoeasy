@@ -75,3 +75,27 @@ day_hour <- function(time1) {
   }
   return(fetxia)
 }
+
+#' Save pheatmap to pdf
+#'
+#' @param x pheatmap object
+#' @param filename filename
+#' @param width width
+#' @param height height
+#'
+#' @return Save the pheatmap in a pdf
+#' @export
+#'
+#' @examples
+#'
+#' \dontrun{
+#' save_pheatmap_pdf (x, filename, width=7, height=7)
+#' }
+save_pheatmap_pdf <- function(x, filename, width=7, height=7) {
+  stopifnot(!missing(x))
+  stopifnot(!missing(filename))
+  pdf(filename, width=width, height=height)
+  grid::grid.newpage()
+  grid::grid.draw(x$gtable)
+  dev.off()
+}
