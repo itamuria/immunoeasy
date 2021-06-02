@@ -99,3 +99,16 @@ save_pheatmap_pdf <- function(x, filename, width=7, height=7) {
   grid::grid.draw(x$gtable)
   dev.off()
 }
+
+# Remove ids
+
+library(GeneStructureTools)
+removeVersion(ids)
+
+# normalizando a TPM
+
+tpm3 <- function(counts,len) {
+  x <- counts/len
+  return(t(t(x)*1e6/colSums(x)))
+}
+

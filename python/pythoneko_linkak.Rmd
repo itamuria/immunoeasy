@@ -1,0 +1,39 @@
+---
+title: "Pythoneko linkak"
+author: "Ibon Tamayo"
+date: "10/3/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Saiatu naiz baina ez dut hainbeste kontrolik eta lan handia da. 
+Shiny kontrolpean edukita askoz hobeto da. 
+
+
+## Python
+
+Python-eko gauzak ere hemen elkarrekin jarri nahi ditut. 
+
+Adibide pila shiny moduko gauzak egiteko
+https://bost.ocks.org/mike/
+
+https://pandas.pydata.org/pandas-docs/stable/ecosystem.html
+
+```{python}
+print("Froga)
+```
+
+Aukerak:
+https://docs.bokeh.org/en/latest/
+
+# Deep learning
+
+https://www.deeplearningbook.org/
+Pausos pauso
+https://www.youtube.com/watch?v=psDlXfbe6ok
+https://www.youtube.com/watch?v=psDlXfbe6ok&list=RDCMUCe6ABcJkH_Gso9HJOt4x9fg&start_radio=1
+

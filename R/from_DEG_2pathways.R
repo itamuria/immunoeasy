@@ -12,6 +12,7 @@
 #' from_DEG_2pathways (res_frame)
 #' }
 
+# http://yulab-smu.top/clusterProfiler-book/chapter3.html#wikipathways-analysis
 
 from_DEG_2pathways <- function(res_frame,wpgmtfile)
 {

@@ -1,6 +1,15 @@
 
 setwd("G:/Mi unidad/KarmeleValencia/DSTYK/TCGA2/")
 
+# Jakiteko nola deitu
+datatable(readr::read_csv("https://docs.google.com/spreadsheets/d/1f98kFdj9mxVDc1dv4xTZdx8iWgUiDYO-qiFJINvmTZs/export?format=csv&gid=2046985454",col_types = readr::cols()),
+          filter = 'top',
+          options = list(scrollX = TRUE, keys = TRUE, pageLength = 40),
+          rownames = FALSE)
+
+# Estructura de los nombres del TCGA
+# https://docs.gdc.cancer.gov/Encyclopedia/pages/TCGA_Barcode/
+
 
 library(TCGAbiolinks)
 library(dplyr)
@@ -17,6 +26,40 @@ query.countsLUAD <- GDCprepare(query = query.counts, save = TRUE, save.filename 
 
 load("LungLUAD.rda")
 query.countsLUAD <- data
+
+query.CNV <-  GDCquery(project = "TCGA-LUAD",
+                       data.category = "Copy Number Variation",
+                       data.type = "Gene Level Copy Number Scores")
+GDCdownload(query.CNV)
+query.CNVLUAD <- GDCprepare(query = query.CNV, save = TRUE, save.filename = "../LungLUAD_CNV.rda")
+
+# SNP
+query.maf <- GDCquery(project = "TCGA-LUAD",
+                      data.category = "Simple Nucleotide Variation",
+                      data.type = "Raw Simple Somatic Mutation",
+                      access = "open",
+                      workflow.type = "SomaticSniper Variant Aggregation and Masking")
+GDCdownload(query.maf)
+maf3 <- GDCprepare(query.maf)
+# https://www.bioconductor.org/packages/devel/bioc/vignettes/TCGAbiolinks/inst/doc/mutation.html
+# maf <- GDCquery_Maf("LUAD", pipelines = "somaticsniper") %>% read.maf
+# # dmaf <- data.frame()
+# datatable(maf[1:20,],
+#           filter = 'top',
+#           options = list(scrollX = TRUE, keys = TRUE, pageLength = 5),
+#           rownames = FALSE)
+#
+# library(maftools)
+# library(dplyr)
+# datatable(getSampleSummary(maf),
+#           filter = 'top',
+#           options = list(scrollX = TRUE, keys = TRUE, pageLength = 5),
+#           rownames = FALSE)
+# plotmafSummary(maf = maf, rmOutlier = TRUE, addStat = 'median', dashboard = TRUE)
+# oncoplot(maf = maf, top = 10, removeNonMutated = TRUE)
+# titv = titv(maf = maf, plot = FALSE, useSyn = TRUE)
+# #plot titv summary
+# plotTiTv(res = titv)
 
 # Frogk -------------------------------------------------------------------
 library(SummarizedExperiment)
