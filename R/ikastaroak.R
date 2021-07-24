@@ -20,6 +20,8 @@ https://cran.r-project.org/web/packages/finalfit/vignettes/survival.html
 https://github.com/crazyhottommy
 https://github.com/jokergoo # complex plots
 https://github.com/hadley  # ggplot, tidyverse
+https://github.com/openbiox/awosome-bioinformatics # se onaaaaaaaaa
+https://github.com/JhuangLab/BioInstaller   # BEGIRATU interesgarria dirudi
 
 # Websites
 https://www.r-graph-gallery.com/
@@ -47,6 +49,8 @@ devtools::install_github("seasmith/AlignAssign") # Formateatzen laguntzen du nah
 install.packages("colourpicker") # koloreekin lan egiteko
 devtools::install_github("dracodoc/mischelper") # funtzio ugari ditu denborak neurtzeko etabar
 remotes::install_github("gadenbuie/regexplain") # regular expression tutorial
+# Nirea ere egin det (easytemplate)
+
 
 
 

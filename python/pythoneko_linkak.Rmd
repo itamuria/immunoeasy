@@ -37,3 +37,19 @@ Pausos pauso
 https://www.youtube.com/watch?v=psDlXfbe6ok
 https://www.youtube.com/watch?v=psDlXfbe6ok&list=RDCMUCe6ABcJkH_Gso9HJOt4x9fg&start_radio=1
 
+# Fastakin lan egiteko
+https://bioinf.shenwei.me/seqkit/
+
+
+
+### adibide ederra biopythonekin
+https://www.biostars.org/p/230180/
+
+## bioinfo adibideak (ikastaroa)
+https://github.com/raynamharris/Shell_Intro_for_Bioinformatics_STG/blob/master/lessons/06_ForLoops.md
+
+## Earra
+https://bioinformaticsworkbook.org/list.html#gsc.tab=0
+
+## Funtzioen adibideak
+https://tldr.ostera.io/grep

@@ -112,3 +112,11 @@ tpm3 <- function(counts,len) {
   return(t(t(x)*1e6/colSums(x)))
 }
 
+# Bioconductor
+
+sessionInfo()
+BiocManager::valid()
+# Dena instalatzeko
+BiocManager::install(c(
+  "rtracklayer", "vroom"
+), update = TRUE, ask = FALSE)

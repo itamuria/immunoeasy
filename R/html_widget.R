@@ -74,7 +74,7 @@ browsable(tagList(
 
 library(DiagrammeR)
 grViz("
-  digraph {
+  digraph {d
     layout = twopi
     node [shape = circle]
     A -> {B C D}
