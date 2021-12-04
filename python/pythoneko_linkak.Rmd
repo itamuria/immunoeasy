@@ -53,3 +53,24 @@ https://bioinformaticsworkbook.org/list.html#gsc.tab=0
 
 ## Funtzioen adibideak
 https://tldr.ostera.io/grep
+
+## Para ver ficheros html 
+http://htmlpreview.github.io/? + html
+
+
+## R-n taulak egiteko
+https://cran.r-project.org/web/packages/qwraps2/vignettes/summary-statistics.html
+https://cran.r-project.org/web/packages/vtable/vignettes/sumtable.html # erreza baina ezin da exportatu
+http://www.danieldsjoberg.com/gtsummary/   ### ****** IMPRESIONANTE
+https://dabblingwithdata.wordpress.com/2018/01/02/my-favourite-r-package-for-summarising-data/
+https://cran.r-project.org/web/packages/summarytools/vignettes/Introduction.html
+
+
+# Time series in r
+https://otexts.com/fpp2/
+
+
+
+
+
+

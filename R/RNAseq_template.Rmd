@@ -9,22 +9,29 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Introduction
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+Lehenik eta behin jakin behar degu zein analisi mota egin nahi degun. Harvard-eko web orri honetan ondo definitzen dituzte aukerak. Sakonera (deep), geneen luzera eta egiturak eragina du emaitzetan. 
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+html-ak ikusteko ondorengo helbidea erabili behar da:
+http://htmlpreview.github.io/? + html fitxeroa
 
-```{r cars}
-summary(cars)
-```
+![gene_examples](gene_examples.jpg)
 
-## Including Plots
+Helburu bakoitzerako aukera ezberdinak proposatzen dituzte. 
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+![gene_analysis_comparison](gene_analysis_comparison.jpg)
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Laburbilduz, RPKM/FPKM ez da komeni erabiltzea. 
+
+Begiratu orri hauek ondo ulertzeko:
+
+https://www.reneshbedre.com/blog/expression_units.html
+
+http://luisvalesilva.com/datasimple/rna-seq_units.html
+
+https://hbctraining.github.io/DGE_workshop/lessons/02_DGE_count_normalization.html
+
+
+
