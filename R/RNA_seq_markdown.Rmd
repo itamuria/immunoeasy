@@ -410,7 +410,7 @@ doc <- ph_with(doc, value = volc, location = ph_location_fullsize())
 
 doc <- add_slide(doc)
 doc <- ph_with(doc, value = comparing_gene_boxplot, location = ph_location_fullsize())
-
-print(doc, target = powerpointfile)
+#
+print(doc, target = powerpointfile) 
 ```
 
