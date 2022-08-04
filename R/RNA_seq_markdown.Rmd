@@ -1,0 +1,416 @@
+---
+title: "RGD vs Mix"
+author: "Ibon & Sara"
+date: '2022-07-11'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Informe
+
+
+```{r pressure, echo=FALSE, warning=FALSE}
+# Modelo ------------------------------------------------------------------
+
+library(edgeR)
+
+# Names -------------------------------------------------------------------
+
+gr1 = "RGD"
+gr2 = "RGD_CD40"
+idnum = "04"
+group <- paste0("id",idnum,"_",gr1,"_",gr2,"_STAR")
+patient = rep("Pat1",12)
+time = c(rep(gr1,6), rep(gr2,6))
+# contraste = "RGD_RASi"
+wd <- "G:/Mi unidad/SaraLabiano/"
+
+# aldatu
+# contr <- makeContrasts(contraste1 = timeCD40  - timeRASI, levels = mm)
+
+dir.create(paste0(wd, "/results/"))
+dir.create(paste0(wd, "/rdata/"))
+dir.create(paste0(wd, "/KEGG/"))
+
+
+go_file <- paste0(wd, "/results/20220704_",group,"_GO.xlsx")
+go_file2 <- paste0(wd, "/results/20220704_",group,"_GO2.xlsx")
+so_file <- paste0(wd, "/rdata/20220704_",group,"_So_hsa.RData")
+
+lhr_genes_file <- paste0(wd, "/results/20220704_",group,"_lhr_Genes.xlsx")
+lhr_transc_file <- paste0(wd, "/results/20220704_",group,"_lhr_trasc.xlsx")
+wald_genes_file <- paste0(wd, "/results/20220704_",group,"_wald_genes.xlsx")
+wald_transc_file <- paste0(wd, "/results/20220704_",group,"_wald_transc.xlsx")
+DEG_contraste = paste0(wd, "/results/20220704_", group, "_deg_top.xlsx")
+
+# counts_raw = paste0(wd, "/results/20220704_", group, "_counts_raw.xlsx")
+logcounts_pat = paste0(wd, "/results/20220704_", group, "_counts_cpm.xlsx")
+
+gseaKEGG_file <- paste0(wd, "/results/20220704_gseaKEGG.xlsx")
+gsea_file <- paste0(wd, "/results/20220704_",group,"_gsea.xlsx")
+powerpointfile <- paste0(wd, "/results/",group,"_results.pptx")
+KEGG_dir <- paste0(wd, "/KEGG")
+
+volcano_title <- group
+
+
+# Collecting data ---------------------------------------------------------
+
+
+
+setwd(wd)
+
+dat <- openxlsx::read.xlsx("20220704_sara_counts.xlsx")
+names(dat)
+```
+
+```{r pressure2, echo=FALSE, warning=FALSE}
+
+sample_id <- c("SL11_RGD","SL15_RGD","SL19_RGD",
+               "SL23_RGD","SL3_RGD","SL7_RGD",
+               
+               "SL16_RGD_CD40","SL20_RGD_CD40","SL24_RGD_CD40",
+               "SL4_RGD_CD40","SL8_RGD_CD40","SL9_RGD_CD40")
+
+
+datos = dat[,c("ENSG",sample_id)]
+
+# load edgeR
+library(edgeR)
+
+k = as.matrix(datos[,-1])
+rownames(k) = datos$ENSG
+
+d <- DGEList(counts = k, group=time)
+d <- calcNormFactors(d)
+d <- estimateCommonDisp(d,verbose=TRUE)
+
+
+###EdgeR
+time_color = c(rep("red",6), rep("blue",6))
+# y <- DGEList(d$counts)
+### plot an MDS plot to see how all the samples scale in multidemensional space
+dmsplot = plotMDS(d, col=time_color, main="MDS Plot")
+
+# https://hbctraining.github.io/DGE_workshop_salmon/lessons/03_DGE_QC_analysis.html
+
+```
+
+```{r, echo=FALSE, warning=FALSE}
+d$samples$group <- time
+k = d
+dim(k)
+
+keep.exprs <- filterByExpr(d, group=time)
+d <- d[keep.exprs,, keep.lib.sizes=FALSE]
+dim(d)
+
+# Get log2 counts per million
+logcounts <- cpm(d,log=TRUE)
+logcounts2 = data.frame(logcounts)
+rownames(logcounts2) = rownames(logcounts)
+
+gtf2  <- read.csv("G:/Mi unidad/Silve/gtf.M27.summary.ibon.gtf", sep = " ",header = F)
+names(gtf2) = c("Chr","Start","End","ENSG","GeneName")
+rownames(gtf2) <- gtf2$ENSG
+
+logcounts2$ENSG = rownames(logcounts2)
+logcounts3 = merge(gtf2, logcounts2, by = "ENSG" )
+
+
+openxlsx::write.xlsx(logcounts3, file = logcounts_pat)
+# rownames(logcounts) = d$samples
+# Check distributions of samples using boxplots
+boxplot(logcounts, xlab="", ylab="Log2 counts per million",las=2)
+# Let's add a blue horizontal line that corresponds to the median logCPM
+abline(h=median(logcounts),col="blue")
+title("Boxplots of logCPMs")
+
+cor_data = cor(logcounts)
+library(pheatmap)
+
+### Plot heatmap
+pheatmap(cor_data)
+
+plotMDS(d, col=time_color, main="MDS Plot")
+
+# Most variables genes ----------------------------------------------------
+
+# We estimate the variance for each row in the logcounts matrix
+var_genes <- apply(logcounts, 1, var)
+# head(var_genes)
+
+select_var <- names(sort(var_genes, decreasing=TRUE))[1:500]
+# head(select_var)
+
+# Subset logcounts matrix
+highly_variable_lcpm <- logcounts[select_var,]
+dim(highly_variable_lcpm)
+
+# head(highly_variable_lcpm)
+
+## Get some nicer colours
+mypalette <- RColorBrewer::brewer.pal(11,"RdYlBu")
+morecols <- colorRampPalette(mypalette)
+# Set up colour vector for celltype variable
+col.cell <- c("purple","orange")[d$samples$group]
+
+library(gplots)
+# Plot the heatmap
+heatmap.2(highly_variable_lcpm,col=rev(morecols(50)),trace="none", main="Top 500 most variable genes across samples",ColSideColors=col.cell,scale="row")
+
+```
+
+
+```{r, echo=FALSE, warning=FALSE}
+
+
+# Basal H2 ----------------------------------------------------------------
+
+
+# cpm <- cpm(k)
+mm <- model.matrix(~ 0 + time)
+y <- voom(d, mm, plot = T)
+fit <- lmFit(y, mm)
+contr <- makeContrasts(contraste1 = timeRGD  - timeRGD_CD40, levels = mm)
+tmp <- contrasts.fit(fit, contr)
+tmp <- eBayes(tmp)
+
+summa.fit <- decideTests(tmp)
+summary(summa.fit)
+
+top.table <- topTable(tmp, coef = "contraste1", n = Inf)
+head(top.table, 20)
+
+par(mfrow=c(1,2))
+plotMD(tmp,coef=1,status=summa.fit[,"contraste1"], values = c(-1, 1), hl.col=c("blue","red"))
+
+volcanoplot(tmp,coef=1,highlight=100, main="Volvano")
+par(mfrow=c(1,1))
+
+
+# cat gencode.vM27.annotation.gtf  | awk '{ if ($3 == "gene") { print } }' |  awk '{ print $1 " " $4 " " $5 " " $10 " " $14}' | sed 's/\"//g' | sed 's/;//g' > gtf.M27.summary.ibon.gtf
+
+
+gtf2  <- read.csv("G:/Mi unidad/Silve/gtf.M27.summary.ibon.gtf", sep = " ",header = F)
+names(gtf2) = c("Chr","Start","End","ENSG","GeneName")
+rownames(gtf2) <- gtf2$ENSG
+
+dataMatCounts_norm_prea <- top.table
+dataMatCounts_norm_prea$ENSG = rownames(dataMatCounts_norm_prea)
+
+obs_norm2_pre = merge(gtf2, dataMatCounts_norm_prea, by = "ENSG" )
+obs_norm2_pre = obs_norm2_pre[order(obs_norm2_pre$P.Value),]
+
+# obs_norm2_pre <- data.frame(gtf2[rownames(dataMatCounts_norm_prea),], dataMatCounts_norm_prea)
+openxlsx::write.xlsx(obs_norm2_pre, file = DEG_contraste)
+
+library(EnhancedVolcano)
+
+volc = EnhancedVolcano(obs_norm2_pre,
+                       lab = obs_norm2_pre$GeneName,
+                       x = 'logFC',
+                       y = 'adj.P.Val',
+                       # xlim = c(-8, 8),
+                       title = volcano_title,
+                       pCutoff = 5e-2,
+                       FCcutoff = 1,
+                       pointSize = 3.0,
+                       labSize = 3.0)
+
+# obtener el gen mas DEG
+best = obs_norm2_pre$ENSG[1]
+best_name = obs_norm2_pre$GeneName[1]
+# mirar mediante boxplot como se distribuyen
+
+cpm = cpm(d)
+ploteatzeko = data.frame(cpm = cpm[rownames(cpm) == best,],
+                         Groups = time, pat = patient, time = time)
+
+library(ggplot2)
+comparing_gene = ggplot(ploteatzeko) + 
+  geom_bar(aes(x=time, y = cpm, fill = as.factor(pat)),
+           position="dodge", stat="identity") + ggtitle(best_name)
+
+comparing_gene_boxplot = ggplot(ploteatzeko, aes(x = time, y = cpm, fill = factor(pat))) +
+  geom_boxplot() +
+  scale_y_continuous(name = "CPM") +
+  scale_x_discrete(labels = abbreviate, name = "")+ ggtitle(best_name)
+
+
+```
+
+
+```{r, echo=FALSE, warning=FALSE}
+# GO ----------------------------------------------------------------------
+
+     # load genowide annotation database
+    library(org.Mm.eg.db)
+    library(clusterProfiler)
+    
+    # convertion
+    conversiontable <- bitr(obs_norm2_pre$GeneName, fromType="SYMBOL", toType="ENTREZID", OrgDb=org.Mm.eg.db, drop=TRUE)
+    # table(is.na(gene_list$SYMBOL))
+    fin_comp = merge(obs_norm2_pre, conversiontable, by.x = "GeneName", by.y = "SYMBOL")
+
+    geneList <- as.numeric(fin_comp$t)
+    names(geneList) <- fin_comp$ENTREZID
+    geneList <- sort(geneList, decreasing = TRUE)
+    
+    # En GSEA no se cortan lista de genes
+    # de <- names(geneList)[abs(geneList) > 2]
+    de = names(geneList)
+    
+    ego <- enrichGO(gene = de[!is.na(de)], 
+                    keyType = "ENTREZID",
+                    OrgDb = org.Mm.eg.db, 
+                    ont = "all", 
+                    pAdjustMethod = "BH", 
+                    qvalueCutoff = 0.1, 
+                    readable = TRUE)
+    
+
+    
+    # geneList_noNA <- geneList[!is.na(names(geneList))]
+    # 
+    # table(names(gl) %in% names(geneList_noNA))
+    
+    library(enrichplot)
+    # goplot(ego)
+    bar <- barplot(ego, showCategory=20)
+    
+    ## Output results from GO analysis to a table
+    cluster_summary <- data.frame(ego)
+    # cluster_summary2 <- data.frame(ego_bp_simple)
+    
+    # write.csv(cluster_summary, "results/clusterProfiler_Mov10oe.csv")
+    openxlsx::write.xlsx(cluster_summary, file = go_file)
+    # openxlsx::write.xlsx(cluster_summary2, file = go_file2)
+    
+    ## Dotplot 
+    dotplot <- dotplot(ego, showCategory=50)
+    # dotplot <- dotplot(ego, showCategory=50)+facet_grid(~.sign)
+    # dotplot(em,showCategory=12,split=".sign")##
+    
+    # go <- enrichGO(de, OrgDb = "org.Mm.eg.db", ont="all")
+    dotplot_onto <- dotplot(ego, split="ONTOLOGY") + facet_grid(ONTOLOGY~., scale="free")
+    
+    upset <- upsetplot(ego)
+    
+
+    library(ggnewscale)
+    edox <- setReadable(ego, 'org.Hs.eg.db', 'ENTREZID')
+    edox2 <- pairwise_termsim(edox)
+    p1tree <- treeplot(edox2)
+    p2tree <- treeplot(edox2, hclust_method = "average")
+    # aplot::plot_list(p1, p2, tag_levels='A')
+    
+
+     library(msigdbr)
+    m_t2g_H <- msigdbr(species = "Mus musculus", category = "H") %>% 
+      dplyr::select(gs_name, entrez_gene)
+    head(m_t2g_H)
+    emH <- GSEA(geneList ,TERM2GENE = m_t2g_H, pvalueCutoff = 0.1,verbose = TRUE)
+    
+    emH <- setReadable(emH, org.Mm.eg.db, keyType = "ENTREZID")
+    dfemH <- data.frame(emH)
+    dfemH$Group = "H"
+    dfCall = dfemH
+    
+    m_t2g_C1 <- msigdbr(species = "Mus musculus", category = "C1") %>% dplyr::select(gs_name, entrez_gene)
+    emC1 <- GSEA(geneList ,TERM2GENE = m_t2g_C1, pvalueCutoff = 0.1,verbose = FALSE)
+    emC1 <- setReadable(emC1, org.Mm.eg.db, keyType = "ENTREZID")
+    dfC1 <- data.frame(emC1)
+    if(nrow(dfC1) > 0)
+      {
+        dfC1$Group = "C1"
+        dfCall <- rbind(dfCall, dfC1)
+      }
+    
+    
+    m_t2g_C2 <- msigdbr(species = "Mus musculus", category = "C2") %>% dplyr::select(gs_name, entrez_gene)
+    emC2 <- GSEA(geneList ,TERM2GENE = m_t2g_C2, pvalueCutoff = 0.1,verbose = FALSE)
+    emC2 <- setReadable(emC2, org.Mm.eg.db, keyType = "ENTREZID")
+    dfC2 <- data.frame(emC2)
+    if(nrow(dfC2) > 0)
+      {
+        dfC2$Group = "C2"
+        dfCall <- rbind(dfCall, dfC2)
+      }
+    
+    m_t2g_C3 <- msigdbr(species = "Mus musculus", category = "C3") %>% dplyr::select(gs_name, entrez_gene)
+    emC3 <- GSEA(geneList ,TERM2GENE = m_t2g_C3, pvalueCutoff = 0.1,verbose = FALSE)
+    emC3 <- setReadable(emC3, org.Mm.eg.db, keyType = "ENTREZID")
+    dfC3 <- data.frame(emC3)
+    if(nrow(dfC3) > 0)
+      {
+        dfC3$Group = "C3"
+        dfCall <- rbind(dfCall, dfC3)
+      }
+    
+    m_t2g_C4 <- msigdbr(species = "Mus musculus", category = "C4") %>% dplyr::select(gs_name, entrez_gene)
+    emC4 <- GSEA(geneList ,TERM2GENE = m_t2g_C4, pvalueCutoff = 0.1,verbose = FALSE)
+    emC4 <- setReadable(emC4, org.Mm.eg.db, keyType = "ENTREZID")
+    dfC4 <- data.frame(emC4)
+    if(nrow(dfC4) > 0)
+      {
+        dfC4$Group = "C4"
+        dfCall <- rbind(dfCall, dfC4)
+      }
+    
+    m_t2g_C5 <- msigdbr(species = "Mus musculus", category = "C5") %>% dplyr::select(gs_name, entrez_gene)
+    emC5 <- GSEA(geneList ,TERM2GENE = m_t2g_C5, pvalueCutoff = 0.1,verbose = FALSE)
+    emC5 <- setReadable(emC5, org.Mm.eg.db, keyType = "ENTREZID")
+    dfC5 <- data.frame(emC5)
+    if(nrow(dfC5) > 0)
+      {
+        dfC5$Group = "C5"
+        dfCall <- rbind(dfCall, dfC5)
+      }
+    
+    m_t2g_C6 <- msigdbr(species = "Mus musculus", category = "C6") %>% dplyr::select(gs_name, entrez_gene)
+    emC6 <- GSEA(geneList ,TERM2GENE = m_t2g_C6, pvalueCutoff = 0.1,verbose = FALSE)
+    emC6 <- setReadable(emC6, org.Mm.eg.db, keyType = "ENTREZID")
+    dfC6 <- data.frame(emC6)
+    if(nrow(dfC6) > 0)
+      {
+        dfC6$Group = "C6"
+        dfCall <- rbind(dfCall, dfC6)
+      }
+    
+    m_t2g_C7 <- msigdbr(species = "Mus musculus", category = "C7") %>% dplyr::select(gs_name, entrez_gene)
+    emC7 <- GSEA(geneList ,TERM2GENE = m_t2g_C7, pvalueCutoff = 0.1,verbose = FALSE)
+    gseaplot(emC7, geneSetID = 1, title = emC7$Description[1])
+    emC7 <- setReadable(emC7, org.Mm.eg.db, keyType = "ENTREZID")
+    dfC7 <- data.frame(emC7)
+    if(nrow(dfC7) > 0)
+      {
+        dfC7$Group = "C7"
+        dfCall <- rbind(dfCall, dfC7)
+      }
+    save(emC7, file = paste0(wd, "/results/20220704_",group,"_C7_forploting.RData"))
+    
+    dfCall <- rbind(dfemH, dfC1, dfC2, dfC3, dfC4, dfC5, dfC6, dfC7)
+    openxlsx::write.xlsx(dfCall, file = gsea_file)
+    
+    # https://alexslemonade.github.io/refinebio-examples/03-rnaseq/pathway-analysis_rnaseq_03_gsva.html
+    # https://www.bioconductor.org/packages/release/bioc/vignettes/GSVA/inst/doc/GSVA.html
+
+
+# Power point -------------------------------------------------------------
+library(officer)
+
+doc <- read_pptx()
+
+doc <- add_slide(doc)
+doc <- ph_with(doc, value = volc, location = ph_location_fullsize())
+
+doc <- add_slide(doc)
+doc <- ph_with(doc, value = comparing_gene_boxplot, location = ph_location_fullsize())
+
+print(doc, target = powerpointfile)
+```
+
