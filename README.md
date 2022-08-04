@@ -61,17 +61,6 @@ Variant callers create vcf files. This files have a defined structure and usuall
 - From vcf to potential neoantigen selection
 
 ```{r vcf2}
-
-
-
-```
-
-### From counts to fpkm from htseq files
-
-If we have the htseq file and we want to obtain the fpmk and cuartiles. mfl_number is the average size of the reads. In this case it is 569.
-
-```{r count2fpkm_htseq}
-
 repmis::source_data("https://github.com/itamuria/immunoeasy/blob/master/data/immunoeasy_counts.RData?raw=true")
 
 names(count_list)
@@ -89,6 +78,17 @@ for(c in 1:length(count_list))
     write.table(count_list[[c]], file = paste0(names(count_list)[c],".txt"),row.names = FALSE)
   }
 }
+
+
+```
+
+### From counts to fpkm from htseq files
+
+If we have the htseq file and we want to obtain the fpmk and cuartiles. mfl_number is the average size of the reads. In this case it is 569.
+
+```{r count2fpkm_htseq}
+
+
 
 biomaRt::biomartCacheClear() 
 mfl_num_z <- 569
