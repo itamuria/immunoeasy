@@ -309,6 +309,13 @@ comparing_gene_boxplot = ggplot(ploteatzeko, aes(x = time, y = cpm, fill = facto
     # aplot::plot_list(p1, p2, tag_levels='A')
     
 
+    # ### Note1. Cutof aldatu behar da eta enrichment egin balio ajustatuekin
+    # geneList01 = names(geneList01)
+    # emH <- enricher(geneList01 ,TERM2GENE = m_t2g_H, pvalueCutoff = 1)
+    # emH <- setReadable(emH, org.Hs.eg.db, keyType = "ENTREZID")
+    # dfemH <- data.frame(emH)
+    # dfemH$Group = "H"
+    
      library(msigdbr)
     m_t2g_H <- msigdbr(species = "Mus musculus", category = "H") %>% 
       dplyr::select(gs_name, entrez_gene)
